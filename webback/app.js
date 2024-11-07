@@ -10,6 +10,7 @@ const passport = require('passport');
 dotenv.config();
 const pageRouter = require('./routes/page');
 const authRouter = require('./routes/auth');
+const restaurantRouter = require('./routes/restaurant');
 const {sequelize} = require('./models');
 const passportConfig = require('./passport');
 
@@ -48,6 +49,7 @@ app.use(passport.session());
 
 app.use('/', pageRouter);
 app.use('/auth',authRouter);
+app.use('/restaurant',restaurantRouter);
 
 
 app.use((req, res, next) => {
