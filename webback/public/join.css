@@ -1,0 +1,83 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f9f9f9;
+}
+
+.join-container {
+  width: 90%;
+  max-width: 400px;
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  position: relative; /* 상대적 위치로 설정 */
+}
+
+.back-button-container {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+.back-button {
+  width: 24px;
+  height: 24px;
+}
+
+h2 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+input[type="email"],
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.btn {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #ffa500;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #ff8c00;
+}
+
+p {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+p a {
+  color: #ffa500;
+  text-decoration: none;
+}
+
+p a:hover {
+  text-decoration: underline;
+}
