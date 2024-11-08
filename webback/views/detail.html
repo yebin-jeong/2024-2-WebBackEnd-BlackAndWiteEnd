@@ -3,12 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{res.name}}</title>
-    
+    <title>{{res.name}} - 레스토랑 상세 정보</title>
+    <link rel="stylesheet" href="/detail.css"> <!-- CSS 파일 연결 -->
 </head>
 <body>
-    {{res.name}}<br>
-    {{res.description}}<br>
-    {{res.link}}<br>
+    <div class="restaurant-detail">
+        <!-- 음식점 사진 및 정보 -->
+        <div class="header">
+            <img src="/images/{{res.id}}.jpg" alt="{{res.name}} 사진" class="restaurant-image">
+            <div class="details">
+                <h1>{{ res.name }}</h1>
+                <div class="header-info">
+                  <a href="{{ res.link }}" target="_blank" class="map-link">네이버 지도에서 위치 보기</a>
+                  <p>{{ res.description }}</p>
+                  <button class="favorite-button" onclick="toggleFavorite()">
+                    <img src="/images/emptyHeart.png" alt="찜 버튼" id="heart-icon">
+                  </button>
+                </div>                
+            </div>
+        </div>
+
+        <!-- 별점, 리뷰, 찜 수 -->
+        <div class="info">
+            <span class="rating">⭐ {{res.rating}} / 5</span>
+            <span class="review-count">리뷰: {{res.review_count}}개</span>
+            <span class="favorite-count">찜: {{res.favorite_count}}개</span>
+        </div>
+
+        <!-- 리뷰 목록 -->
+        <div class="review-list">
+            <h2>리뷰 목록</h2>
+            <!-- 리뷰 아이템 -->
+            {% for review in reviews %}
+            <div class="review-item">
+                <p class="review-text">{{ review.text }}</p>
+                <span class="review-rating">⭐ {{ review.rating }}</span>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- 리뷰 및 별점 등록 섹션 -->
+        <div class="review-section">
+            <div class="rating-input">
+                <span id="star-rating">
+                    <!-- 별점 이미지 표시 -->
+                    <img src="/images/emptyStar.png" alt="별점1" onclick="setRating(1)" data-value="1">
+                    <img src="/images/emptyStar.png" alt="별점2" onclick="setRating(2)" data-value="2">
+                    <img src="/images/emptyStar.png" alt="별점3" onclick="setRating(3)" data-value="3">
+                    <img src="/images/emptyStar.png" alt="별점4" onclick="setRating(4)" data-value="4">
+                    <img src="/images/emptyStar.png" alt="별점5" onclick="setRating(5)" data-value="5">
+                </span>
+            </div>
+            <h2>리뷰 및 별점 등록</h2>
+            <textarea placeholder="리뷰를 작성해 주세요..." rows="4"></textarea>
+            <button class="submit-review-button">등록</button>
+        </div>
+    </div>
+
+    <script>
+        function toggleFavorite() {
+            const heartIcon = document.getElementById('heart-icon');
+            if (heartIcon.src.includes("emptyHeart")) {
+                heartIcon.src = "/images/redHeart.png";
+            } else {
+                heartIcon.src = "/images/emptyHeart.png";
+            }
+        }
+
+        function setRating(rating) {
+            const stars = document.querySelectorAll('#star-rating img');
+            stars.forEach((star, index) => {
+                star.src = index < rating ? "/images/yellowStar.png" : "/images/emptyStar.png";
+            });
+        }
+    </script>
 </body>
 </html>
+
