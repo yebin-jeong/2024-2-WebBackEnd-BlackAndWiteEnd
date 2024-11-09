@@ -1,6 +1,7 @@
 const passport = require('passport');
 const local = require('./localStrategy');
 const User = require('../models/user');
+const Restaurant = require('../models/restaurant');
 
 module.exports = () => {
   passport.serializeUser((user, done) => {
@@ -10,13 +11,9 @@ module.exports = () => {
   passport.deserializeUser((id, done) => {
     User.findOne({
       where: { id },
-      include: [{
-        model: User,
-        attributes: ['id', 'nick'],
-        as: 'Followers',
-      }, {
-        model: User,
-        attributes: ['id', 'nick'],
+      include: [ {
+        model: Restaurant,
+        attributes: ['id', 'name'],
         as: 'Followings',
       }],
     })

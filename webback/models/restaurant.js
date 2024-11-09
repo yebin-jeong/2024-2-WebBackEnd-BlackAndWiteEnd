@@ -36,6 +36,12 @@ module.exports = class Restaurant extends Sequelize.Model {
 
   static associate(db) {
     //db.Restaurant.hasMany(db.Review);
+    db.Restaurant.belongsToMany(db.User, {
+      foreignKey: 'restaurantId',
+      as: 'Followers',
+      through: 'Follow',
+      timestamps: false,
+    });
   }
 
 };
