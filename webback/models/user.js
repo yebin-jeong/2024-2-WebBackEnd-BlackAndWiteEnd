@@ -35,18 +35,13 @@ module.exports = class User extends Sequelize.Model {
   }
 
   static associate(db) {
-    db.User.hasMany(db.Post);
     db.User.belongsToMany(db.Restaurant, {
       foreignKey: 'followerId',
       as: 'Followings',
       through: 'Follow',
       timestamps: false,
     });
-  }
-
-  static associate(db) {
     db.User.hasMany(db.Review); // User가 여러 Review를 가질 수 있는 관계 설정
-  }
-  
+  }  
 };
 

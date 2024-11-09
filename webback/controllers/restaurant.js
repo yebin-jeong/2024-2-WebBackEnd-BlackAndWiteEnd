@@ -1,7 +1,5 @@
 const Restaurant = require('../models/restaurant');
 const Review = require('../models/review');
-const { isLoggedIn } = require('../middlewares');
-
 
 
 exports.renderResList = async(req, res)=>{
@@ -41,8 +39,6 @@ exports.renderDetail = async (req, res) => {
         const followCount = await restaurant.countFollowers(); // 찜 개수 가져오기
         restaurant.favorite_count = followCount;
 
-        console.log('도착');
-        const resId = parseInt(req.params.id, 10); // URL에서 ID 파라미터 추출
         try {
             const restaurant = await Restaurant.findByPk(resId, {
                 include: [{
@@ -53,7 +49,6 @@ exports.renderDetail = async (req, res) => {
             res.render('detail', {
                 res: restaurant,
                 reviews: restaurant.reviews, //해당 음식점의 리뷰 정보 전달
-                // user: user //로그인한 사용자 정보 전달
             });
         } catch (error) {
             console.error(error);
@@ -70,12 +65,11 @@ exports.renderDetail = async (req, res) => {
 exports.post = async (req, res) => {
     try {
         const { content, rating } = req.body;
-        const userId = req.user.id; // 로그인한 사용자의 ID
         const restaurantId = req.params.id;
 
         // 리뷰 등록
         const restaurant = await Restaurant.findByPk(restaurantId);
-        const review = await Reivew.create({
+        const review = await Review.create({
             content: content,
             rating: rating,
             restaurantId: restaurantId,

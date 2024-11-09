@@ -37,22 +37,12 @@ exports.login = (req,res,next) => {
         if(!user) {
             return res.redirect(`/?loginError=${info.message}`);
         }
-        return req.login(user, async (loginError) => {
+        return req.login(user, (loginError) => {
             if (loginError) {
                 console.error(loginError);
                 return next(loginError);
             }
-            const restaurant = await Restaurant.findByPk(req.user.id, {
-                include: [{
-                    model: Reivew,  // Review 모델을 포함시킴
-                    as: 'reviews'   // Review와의 관계 이름 (모델 정의 시 설정한 이름)
-                }]
-            });
-            res.render('detail', {
-                res: restaurant,
-                reviews: restaurant.reviews, //해당 음식점의 리뷰 정보 전달
-                user: req.user.id //로그인한 사용자 정보 전달
-            });
+            return res.redirect('/');
         });
     })(req,res,next);
 };
