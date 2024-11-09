@@ -1,6 +1,29 @@
 {% extends 'main.html' %}
 
 {% block content %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입</title>
+    <link rel="stylesheet" href="/profile.css">
+</head>
+<body>
+  <h2 class="title">Profile</h2>
+  <div class="my-page">
+    <img src="images/cook.png" id="cook">
+    <h1></h1>
+    <div class="reviews">
+      {% if user.Reviews %}
+        {% for review in user.Reviews %}
+          <div class="review-item">{{review.content}}</div>
+        {% endfor %}
+      {% else %}
+        <p>작성한 리뷰가 없습니다.</p>
+      {% endif %}
+    </div>
+  </div>
   <div class="timeline">
     <div class="followings half">
       <h2>팔로잉 목록</h2>
@@ -20,3 +43,5 @@
     </div>
   </div>
 {% endblock %}
+</body>
+</html>

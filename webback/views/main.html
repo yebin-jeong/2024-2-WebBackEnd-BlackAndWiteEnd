@@ -20,6 +20,7 @@
         {% else %}
           <a id="login" href="login" class="btn">로그인</a>
           <a id="join" href="join" class="btn">회원가입</a>
+          <a id="join" href="login" class="btn">내 프로필</a>
         {% endif %}
         </div>
         <footer>
@@ -32,7 +33,7 @@
     </div>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
-      window.onload = () => {
+     window.onload = () => {
         if (new URL(location.href).searchParams.get('loginError')) {
           alert(new URL(location.href).searchParams.get('loginError'));
         }

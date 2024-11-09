@@ -113,37 +113,6 @@ body {
   padding: 0;
 }
 
-/* 인트로 화면 스타일 */
-.intro-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%; /* 너비를 100%로 설정하여 전체 화면 가로로 확장 */
-  max-width: none; /* 최대 너비 제한 해제 */
-  height: 100vh; /* 화면의 전체 높이를 차지 */
-  text-align: center;
-  background-color: transparent; /* 배경색 제거 */
-  box-shadow: none; /* 그림자 제거 */
-  padding: 0; /* 내부 여백 제거 */
-}
-
-.intro-container h1 {
-  font-size: 2rem;
-  color: #333;
-}
-
-.intro-container p {
-  font-size: 1rem;
-  color: #666;
-}
-
-.intro-image {
-  width: 150px; /* 이미지 크기를 원하는 크기로 조정 */
-  height: auto;
-  margin-bottom: 20px;
-}
-
 /* index.html의 상단 헤더 부분 */
 #location-container {
   display: inline-flex;
