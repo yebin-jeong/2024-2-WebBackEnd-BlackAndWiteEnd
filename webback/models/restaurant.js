@@ -34,14 +34,16 @@ module.exports = class Restaurant extends Sequelize.Model {
     });
   }
 
+
   static associate(db) {
-    //db.Restaurant.hasMany(db.Review);
     db.Restaurant.belongsToMany(db.User, {
       foreignKey: 'restaurantId',
       as: 'Followers',
       through: 'Follow',
       timestamps: false,
     });
-  }
-
-};
+    db.Restaurant.hasMany(db.Review, {
+      foreignKey: 'restaurantId',  // Review 모델에서 사용할 외래 키
+      as: 'reviews'  // 이 관계를 조회할 때 사용할 이름
+    });
+}};

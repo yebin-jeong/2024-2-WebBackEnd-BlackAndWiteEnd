@@ -1,6 +1,9 @@
 const bcrypt = require('bcrypt');
 const passport = require('passport');
 const User = require('../models/user');
+const Restaurant = require('../models/restaurant');
+const Reivew = require('../models/review');
+
 
 exports.join = async (req,res,next) => {
     const {email, nick, password} = req.body;

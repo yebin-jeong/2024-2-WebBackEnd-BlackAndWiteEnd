@@ -1,5 +1,6 @@
 exports.isLoggedIn = (req,res,next) => {
     if(req.isAuthenticated()){
+        console.log('로그인된 사용자 정보 : ' +  req.user);
         next();
     }else {
         res.status(403).send('로그인 필요');

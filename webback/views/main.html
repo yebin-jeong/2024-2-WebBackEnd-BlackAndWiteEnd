@@ -16,10 +16,15 @@
            
           <input id="my-id" type="hidden" value="{{user.id}}">
           <a id="my-profile" href="/profile" class="btn">내 프로필</a>
-          <a id="logout" href="/auth/logout" class="btn">로그아웃</a>
+          <a id="logout" href="/auth/logout" class="btn">로그아웃</a><br>
+          <a id="my-profile" href="/restaurant/dongguk" class="btn">동입</a><br>
+          <a id="my-profile" href="/restaurant/chungmuro" class="btn">충무로</a><br>
         {% else %}
           <a id="login" href="login" class="btn">로그인</a>
-          <a id="join" href="join" class="btn">회원가입</a>
+          <a id="join" href="join" class="btn">회원가입</a><br>
+          <a id="my-profile" href="/restaurant/dongguk" class="btn">동입</a><br>
+          <a id="my-profile" href="/restaurant/chungmuro" class="btn">충무로</a><br>
+          
           <a id="join" href="login" class="btn">내 프로필</a>
         {% endif %}
         </div>
