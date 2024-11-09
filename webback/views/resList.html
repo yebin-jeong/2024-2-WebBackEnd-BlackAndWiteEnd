@@ -1,22 +1,47 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{title}}</title>   
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{title}}</title>
+  <link rel="stylesheet" href="/resList.css"> 
 </head>
 <body>
-    <div class="restaurant">
-      {% if restaurants %}
-        {% for res in restaurants %}
-          <div>
-            <a href="/restaurant/{{res.id}}">
-              {{res.name}}<br>
-              {{res.description}}
-            </a>
-          </div>
-        {% endfor %}
-      {% endif %}
+  <div class="container">
+    <div class="header">
+      <span id="location-toggle">충무로</span> <!-- 지역 선택 -->
     </div>
+    
+    <input type="text" placeholder="맛집을 검색해 보세요" class="search-input" /> 
+    
+    <div class="recommendation">
+      <button id="reviewFilter" class="filter-button">리뷰순</button> <!-- 리뷰순 정렬 버튼 -->
+      <button id="ratingFilter" class="filter-button">별점순</button> <!-- 별점순 정렬 버튼 -->
+      <button id="likeFilter" class="filter-button">추천순</button> <!-- 찜 개수순 정렬 버튼 -->
+      <div class="restaurant-list">
+        {% if restaurants %}
+          {% for res in restaurants %}
+            <div class="restaurant-item"> 
+              <a href="/restaurant/{{res.id}}">               
+              <img src="/images/{{res.id}}.jpg" alt="{{res.name}} 사진" class="restaurant-icon">
+              <div class="restaurant-content">
+                <h3>{{res.name}}</h3> 
+                <p>{{res.description}}</p> 
+                <div class="rating">
+                  <img src="/images/yellowStar.png" alt="별점" class="star-icon"> {{res.rating}} ({{res.reviews}}) <!-- 별점과 리뷰 개수 -->
+                </div>
+                <div class="like-section">
+                  <button class="like-button">
+                    <img src="/images/redHeart.png" alt="찜" class="heart-icon">
+                  </button>
+                  <div class="like-count">{{res.like_count}}</div> <!-- 찜 개수 표시 -->
+                </div>
+            </div>
+            </div>
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
 </body>
 </html>
