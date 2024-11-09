@@ -14,6 +14,8 @@ const restaurantRouter = require('./routes/restaurant');
 const {sequelize} = require('./models');
 const passportConfig = require('./passport');
 
+
+
 const app = express();
 passportConfig();
 app.set('port', process.env.PORT || 8001);
@@ -68,3 +70,14 @@ app.use((err, req, res, next) => {
 app.listen(app.get('port'), () => {
   console.log(app.get('port'), '번 포트에서 대기중');
 });
+
+// //로그인 정보 세션에 저장
+// app.post('/auth/login', (req, res) => {
+//   // 로그인 성공 시
+//   req.session.user = {
+//       id: user.id,  // 로그인한 사용자 ID
+//       nick: user.nick  // 사용자 이름
+//   };
+//   console.log('app_user : ' + user.id);
+//   res.redirect('/');
+// });
