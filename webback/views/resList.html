@@ -42,5 +42,38 @@
       </div>
     </div>
   </div>
+  <script>
+      const searchInput = document.querySelector(".search-input");
+
+      // 검색 이벤트 추가
+      searchInput.addEventListener("input", () => {
+          const query = searchInput.value.toLowerCase();
+          filterRestaurants(query);
+          
+          // 백엔드에 검색 파라미터 전송
+          if (query) {
+              fetch(`/restaurant/search?name=${encodeURIComponent(query)}`)
+                  .then(response => response.json())
+                  .then(data => {
+                      console.log('검색 결과:', data);
+                  })
+                  .catch(error => console.error('검색 요청 중 오류 발생:', error));
+          }
+      });
+
+      // 식당 목록 필터링 함수
+      function filterRestaurants(query) {
+          const cards = document.querySelectorAll(".restaurant-item");
+          cards.forEach(card => {
+              const restaurantName = card.querySelector("h3").textContent.toLowerCase();
+              if (restaurantName.includes(query)) {
+                  card.style.display = "flex";
+              } else {
+                  card.style.display = "none";
+              }
+          });
+      }
+  </script>
 </body>
 </html>
+김

@@ -26,6 +26,7 @@
   .header {
     display: flex;
     align-items: flex-start;
+    margin-top: 20px;
   }
 
   .header-info {
@@ -163,3 +164,6 @@
     background-color: #d35400;
   }
   
+  .login {
+    text-decoration: none;
+  }

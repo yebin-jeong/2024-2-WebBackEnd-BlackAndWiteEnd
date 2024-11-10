@@ -8,6 +8,12 @@
 </head>
 <body>
     <div class="restaurant-detail">
+        <div class="back-button-container">
+        <a href="/restaurant/dongguk">
+       <!-- <a href="/restaurant/dongguk"> -->
+            <img src="/images/arrow.png" class="back-button" alt="뒤로가기">
+        </a>
+        </div>
         <!-- 음식점 사진 및 정보 -->
         <div class="header">
             <img src="/images/{{res.id}}.jpg" alt="{{res.name}} 사진" class="restaurant-image">
@@ -64,7 +70,7 @@
             </form>
                 
             {% else %}
-            <p> <a href="/login">로그인</a> 후 리뷰를 작성할 수 있습니다.</p>
+            <p> <a href="/login" class="login">로그인</a> 후 리뷰를 작성할 수 있습니다.</p>
             {% endif %}
         </div>
     </div>
