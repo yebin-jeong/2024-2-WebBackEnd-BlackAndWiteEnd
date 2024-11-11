@@ -51,14 +51,14 @@
           filterRestaurants(query);
           
           // 백엔드에 검색 파라미터 전송
-          if (query) {
-              fetch(`/restaurant/search?name=${encodeURIComponent(query)}`)
-                  .then(response => response.json())
-                  .then(data => {
-                      console.log('검색 결과:', data);
-                  })
-                  .catch(error => console.error('검색 요청 중 오류 발생:', error));
-          }
+          //if (query) {
+          //    fetch(`/restaurant/search?name=${encodeURIComponent(query)}`)
+          //       .then(response => response.json())
+            //      .then(data => {
+              //        console.log('검색 결과:', data);
+                //  })
+                  //.catch(error => console.error('검색 요청 중 오류 발생:', error));
+        //  }
       });
 
       // 식당 목록 필터링 함수
@@ -76,4 +76,3 @@
   </script>
 </body>
 </html>
-김
