@@ -13,6 +13,7 @@ router.use((req, res, next) => {
 });
 
 router.get('/profile', isLoggedIn,renderProfile);
+// router.get('/profile', isNotLoggedIn,renderLogin);
 router.get('/join', isNotLoggedIn, renderJoin);
 router.get('/', renderMain);
 router.get('/login',isNotLoggedIn, renderLogin);
