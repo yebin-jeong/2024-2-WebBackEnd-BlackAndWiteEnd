@@ -6,11 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="stylesheet" href="/loading.css">
     <title>로딩 화면</title>
+    
   </head>
   <body>
     <!-- 로고 표시 영역 -->
     <div class="logo-container">
       <img id="logo" src="/images/logowith.png" alt="로고">
     </div>
+    <script>
+        // 로딩 화면이 2초 동안 표시된 후 메인 페이지로 이동
+        setTimeout(() => {
+            window.location.href = "/restaurant/dongguk"; // 메인 페이지의 URL 경로로 설정
+        }, 2700); 
+    </script>
   </body>
 </html>
