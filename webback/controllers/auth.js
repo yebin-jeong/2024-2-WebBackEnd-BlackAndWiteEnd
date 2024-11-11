@@ -21,7 +21,7 @@ exports.join = async (req,res,next) => {
             nick,
             password: hash,
         });
-        return res.redirect('/');
+        return res.redirect('/login');
     } catch (error) {
         console.error(error);
         return next(error);
