@@ -8,7 +8,7 @@ router.use((req, res, next) => {
   res.locals.user = req.user;
   // res.locals.followerCount = 0;
   res.locals.followingCount = req.user?.Followings?.length || 0;
-  res.locals.followingIdList = req.user?.Followings?.map(f=>f.id)||[];
+  // res.locals.followingIdList = req.user?.Followings?.map(f=>f.id)||[];
   next();
 });
 
