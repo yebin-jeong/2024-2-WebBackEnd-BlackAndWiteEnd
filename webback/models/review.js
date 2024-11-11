@@ -28,7 +28,10 @@ module.exports = class Review extends Sequelize.Model {
   }
 
   static associate(db) {
-    db.Review.belongsTo(db.User);
+    db.Review.belongsTo(db.User, {
+      foreignKey: 'userId',
+      as: 'user'
+    });
     db.Review.belongsTo(db.Restaurant, {
       foreignKey: 'restaurantId',  // Review 모델에서 사용할 외래 키
       as: 'restaurant'  // 이 관계를 조회할 때 사용할 이름
