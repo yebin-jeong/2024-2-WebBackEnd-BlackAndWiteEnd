@@ -27,5 +27,13 @@
             <p>계정이 없으신가요? <a href="join">회원가입</a></p>
         </form>
     </div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+     window.onload = () => {
+        if (new URL(location.href).searchParams.get('loginError')) {
+          alert(new URL(location.href).searchParams.get('loginError'));
+        }
+      };
+    </script>
 </body>
 </html>
