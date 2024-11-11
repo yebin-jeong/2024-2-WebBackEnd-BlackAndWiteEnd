@@ -104,11 +104,8 @@ exports.post = async (req, res) => {
                 as: 'reviews'   // Review와의 관계 이름
             }]
         });
-        // 음식점과 최신 리뷰들을 렌더링
-        res.render('detail', {
-            res: updatedRestaurant,  // 음식점 정보
-            reviews: updatedRestaurant.reviews  // 최신 리뷰 목록
-        });
+        return res.redirect(`/restaurant/res/${restaurantId}`);
+
     } catch (error) {
         console.error(error);
         res.status(500).send('리뷰 등록에 실패했습니다.');
