@@ -43,12 +43,21 @@ exports.renderResList = async (req, res) => {
 exports.renderDetail = async (req, res) => {
     const resId = parseInt(req.params.id); // URL에서 ID 파라미터 추출
     try {
+        const user = req.user;
+        let userFollow = false;
+        
         const restaurant = await Restaurant.findByPk(resId, {
                 include: [{
                     model: Review,  // Review 모델을 포함시킴
                     as: 'reviews'   // Review와의 관계 이름 (모델 정의 시 설정한 이름)
                 }]
             });
+        //찜
+        if (user) {
+                const followings = await user.getFollowings({ where: { id: restaurant.id } });
+                userFollow = followings.length > 0; // 팔로잉이 있으면 true, 없으면 false
+        }
+
         const followCount = await restaurant.countFollowers(); // 찜 개수 가져오기
         // 총 리뷰 수 계산
         const reviewCount = restaurant.reviews.length;
@@ -61,7 +70,8 @@ exports.renderDetail = async (req, res) => {
                 reviews: restaurant.reviews, //레스토랑별 리뷰
                 average_rating: avgRating,  // 평균 별점
                 review_count: reviewCount,  // 총 리뷰 수
-                favorite_count: followCount
+                favorite_count: followCount,
+                userFollow: userFollow
             });
         
     } catch (error) {
