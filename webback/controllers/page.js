@@ -1,8 +1,29 @@
 const Restaurant = require('../models/restaurant');
 const User = require('../models/user');
+const Review = require('../models/review');
 
-exports.renderProfile =(req, res)=>{
-    res.render('profile', {title: '내정보 - 동국요리사'});
+exports.renderProfile = async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const reviews = await Review.findAll({
+            where: { userId }, // userId가 현재 로그인한 사용자와 일치하는 리뷰만 조회
+            include: [
+                {
+                    model: Restaurant,
+                    as: 'restaurant',
+                }
+            ],
+        });
+        console.log(reviews);
+        res.render('profile', {
+            title: '내 정보 - 동국요리사',
+            reviews: reviews, // 조회된 리뷰 데이터를 템플릿에 전달
+            user: req.user
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('리뷰 데이터를 불러오는 데 실패했습니다.');
+    }
 };
 
 exports.renderJoin =(req, res)=>{
@@ -11,7 +32,7 @@ exports.renderJoin =(req, res)=>{
 
 exports.renderMain =(req, res,next)=>{
     const twits = [];
-    res.render('main', {title: '동국요리사', twits});
+    res.render('loading', {title: '동국요리사', twits});
 };
 exports.renderLogin =(req, res,next)=>{
     res.render('login', {title: '로그인'});

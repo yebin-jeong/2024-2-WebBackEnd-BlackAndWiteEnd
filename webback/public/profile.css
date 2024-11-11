@@ -38,7 +38,7 @@
   background-color: #ffffff;
   border: 1px solid #ddd;
   border-radius: 8px;
-  padding: 15px;
+  padding: 40px;
 }
 .review-item {
   padding: 10px;
@@ -57,4 +57,40 @@
   text-align: left;
   margin-left: 0;
   padding-left: 10px;
+  margin-top: 100px;
+}
+
+.container {
+  width: 100%;
+  max-width: 400px;
+  margin: auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin-top: 100px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.greeting {
+  font-size: 24px;
+  font-weight: bold;
+  text-align:left;
+}
+
+.logout-btn {
+  background-color:none;
+  color: #000;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.greeting { 
+  position:absolute;
+  margin-top:40px;
 }

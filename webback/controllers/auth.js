@@ -21,7 +21,7 @@ exports.join = async (req,res,next) => {
             nick,
             password: hash,
         });
-        return res.redirect('/');
+        return res.redirect('/login');
     } catch (error) {
         console.error(error);
         return next(error);
@@ -35,7 +35,7 @@ exports.login = (req,res,next) => {
             return next(authError);
         }
         if(!user) {
-            return res.redirect(`/?loginError=${info.message}`);
+            return res.redirect(`/login/?loginError=${info.message}`);
         }
         return req.login(user, (loginError) => {
             if (loginError) {

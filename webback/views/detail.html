@@ -8,6 +8,12 @@
 </head>
 <body>
     <div class="restaurant-detail">
+        <div class="back-button-container">
+        <a href="/restaurant/dongguk">
+       <!-- <a href="/restaurant/dongguk"> -->
+            <img src="/images/arrow.png" class="back-button" alt="뒤로가기">
+        </a>
+        </div>
         <!-- 음식점 사진 및 정보 -->
         <div class="header">
             <img src="/images/{{res.id}}.jpg" alt="{{res.name}} 사진" class="restaurant-image">
@@ -27,7 +33,7 @@
         <div class="info">
             <span class="rating">⭐ {{average_rating}} / 5</span>
             <span class="review-count">리뷰: {{review_count}}개</span>
-            <span class="favorite-count">찜: {{avorite_count}}개</span>
+            <span class="favorite-count">찜: {{favorite_count}}개</span>
         </div>
 
         <!-- 리뷰 목록 -->
@@ -64,13 +70,13 @@
             </form>
                 
             {% else %}
-            <p> <a href="/login">로그인</a> 후 리뷰를 작성할 수 있습니다.</p>
+            <p> <a href="/login" class="login">로그인</a> 후 리뷰를 작성할 수 있습니다.</p>
             {% endif %}
         </div>
     </div>
 
     <script>
-        function toggleFavorite() {
+        function toggleFavorite() {//'userFollow'가 true이면 빨간 하트
             const heartIcon = document.getElementById('heart-icon');
             if (heartIcon.src.includes("emptyHeart")) {
                 heartIcon.src = "/images/redHeart.png";
