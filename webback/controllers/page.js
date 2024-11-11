@@ -11,7 +11,7 @@ exports.renderJoin =(req, res)=>{
 
 exports.renderMain =(req, res,next)=>{
     const twits = [];
-    res.render('main', {title: '동국요리사', twits});
+    res.render('loading', {title: '동국요리사', twits});
 };
 exports.renderLogin =(req, res,next)=>{
     res.render('login', {title: '로그인'});
