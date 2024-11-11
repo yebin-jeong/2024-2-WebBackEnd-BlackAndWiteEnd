@@ -50,7 +50,7 @@
       <h2>찜 목록 개수: {{followingCount}}</h2>
       {% if user.Followings %}
         {% for following in user.Followings %}
-          <div>{{following.name}}</div>
+          <div>{{following.name}}이건아이디해당 상세페이지로 연결 요망:{{following.id}}</div>
         {% endfor %}
       {% endif %}
     </div>
