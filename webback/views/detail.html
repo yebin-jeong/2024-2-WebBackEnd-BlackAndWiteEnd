@@ -76,7 +76,7 @@
     </div>
 
     <script>
-        function toggleFavorite() {
+        function toggleFavorite() {//'userFollow'가 true이면 빨간 하트
             const heartIcon = document.getElementById('heart-icon');
             if (heartIcon.src.includes("emptyHeart")) {
                 heartIcon.src = "/images/redHeart.png";
