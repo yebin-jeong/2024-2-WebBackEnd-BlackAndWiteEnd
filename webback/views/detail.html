@@ -3,27 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{res.name}} - 레스토랑 상세 정보</title>
-    <link rel="stylesheet" href="/detail.css"> <!-- CSS 파일 연결 -->
+    <title>{{ res.name }} - 레스토랑 상세 정보</title>
+    <link rel="stylesheet" href="/detail.css">
 </head>
 <body>
     <div class="restaurant-detail">
         <div class="back-button-container">
-        <a href="/restaurant/dongguk">
-       <!-- <a href="/restaurant/dongguk"> -->
-            <img src="/images/arrow.png" class="back-button" alt="뒤로가기">
-        </a>
+            <a href="/restaurant/dongguk">
+                <img src="/images/arrow.png" class="back-button" alt="뒤로가기">
+            </a>
         </div>
+
         <!-- 음식점 사진 및 정보 -->
         <div class="header">
-            <img src="/images/{{res.id}}.jpg" alt="{{res.name}} 사진" class="restaurant-image">
+            <img src="/images/{{ res.id }}.jpg" onerror="this.onerror=null; this.src='/images/img_none.png';" alt="{{ res.name }} 사진" class="restaurant-image">
             <div class="details">
                 <h1>{{ res.name }}</h1>
                 <div class="header-info">
                   <a href="{{ res.link }}" target="_blank" class="map-link">네이버 지도에서 위치 보기</a>
                   <p>{{ res.description }}</p>
-                  <button class="favorite-button" onclick="toggleFavorite()">
-                    <img src="/images/emptyHeart.png" alt="찜 버튼" id="heart-icon">
+                  <button class="favorite-button" onclick="toggleFavorite()" id="favorite-container" data-logged-in="{{ 'true' if user else 'false' }}">
+                     <img src="/images/{{ 'redHeart.png' if userFollow else 'emptyHeart.png' }}" alt="찜 버튼" id="heart-icon">
                   </button>
                 </div>                
             </div>
@@ -31,68 +31,224 @@
 
         <!-- 별점, 리뷰, 찜 수 -->
         <div class="info">
-            <span class="rating">⭐ {{average_rating}} / 5</span>
-            <span class="review-count">리뷰: {{review_count}}개</span>
-            <span class="favorite-count">찜: {{favorite_count}}개</span>
+            <span class="rating">⭐ {{ average_rating }} / 5</span>
+            <span class="review-count" id="review-count">리뷰: {{ review_count }}개</span>
+            <span class="favorite-count" id="favorite-count">찜: {{ favorite_count }}개</span>
         </div>
 
         <!-- 리뷰 목록 -->
-        <div class="review-list">
+        <div id="review-list" class="review-list">
             <h2>리뷰 목록</h2>
-            <!-- 리뷰 아이템 -->
+            <!-- 정렬 옵션 추가 -->
+            <div class="sort-options">
+                <select id="sort" onchange="sortReviews(this.value)">
+                    <option value="latest">최신순</option>
+                    <option value="high-rating">별점 높은 순</option>
+                    <option value="low-rating">별점 낮은 순</option>
+                </select>
+            </div>
+
+        <div id="scrollable-reviews" class="scrollable-reviews">
             {% for review in reviews %}
-            <div class="review-item">
-                <p class="review-text">{{ review.content }}</p>
-                <span class="review-rating">⭐ {{ review.rating }}</span>
+            <div class="review-item" 
+            data-date="{% if review.createdAt and review.createdAt is string %}{{ review.createdAt.split(' ').join('T') }}{% else %}잘못된 날짜{% endif %}" 
+            data-rating="{{ review.rating }}" 
+            data-favorites="{{ review.favorite_count }}">
+                <p class="review-text">{{ review.content | truncate(30) }}</p>
+                <div class="review-footer">
+                    <span class="review-rating">⭐ {{ review.rating }}</span>
+                    <span class="review-date">
+                        {% if review.createdAt %}
+                            {{ review.createdAt }}
+                        {% else %}
+                            <span>날짜 정보 없음</span>
+                        {% endif %}
+                    </span>
+                </div>
             </div>
             {% endfor %}
         </div>
+        </div>
+
 
         <!-- 리뷰 및 별점 등록 섹션 -->
         <div class="review-section">
-            <div class="rating-input">
-                <span id="star-rating">
-                    <!-- 별점 이미지 표시 -->
-                    <img src="/images/emptyStar.png" alt="별점1" onclick="setRating(1)" data-value="1">
-                    <img src="/images/emptyStar.png" alt="별점2" onclick="setRating(2)" data-value="2">
-                    <img src="/images/emptyStar.png" alt="별점3" onclick="setRating(3)" data-value="3">
-                    <img src="/images/emptyStar.png" alt="별점4" onclick="setRating(4)" data-value="4">
-                    <img src="/images/emptyStar.png" alt="별점5" onclick="setRating(5)" data-value="5">
-                </span>
-            </div>
             <h2>리뷰 및 별점 등록</h2>
-            <!-- 로그인 여부에 따라 리뷰 입력창 활성화/비활성화 -->
             {% if user %}
-            <form action="/restaurant/res/{{res.id}}" method="post">
-                <textarea name="content" placeholder="리뷰를 작성해 주세요..." rows="4"></textarea>
-                <input type="hidden" name="rating" id="rating-value" value="0">
-                <button class="submit-review-button">등록</button>
-            </form>
-                
+                <div class="rating-input">
+                    <span id="star-rating">
+                        <img src="/images/emptyStar.png" alt="별점1" onclick="setRating(1)" data-value="1">
+                        <img src="/images/emptyStar.png" alt="별점2" onclick="setRating(2)" data-value="2">
+                        <img src="/images/emptyStar.png" alt="별점3" onclick="setRating(3)" data-value="3">
+                        <img src="/images/emptyStar.png" alt="별점4" onclick="setRating(4)" data-value="4">
+                        <img src="/images/emptyStar.png" alt="별점5" onclick="setRating(5)" data-value="5">
+                    </span>
+                </div>
+                <form action="/restaurant/res/{{ res.id }}" method="post">
+                    <textarea id="review-content" name="content" placeholder="리뷰를 작성해 주세요..." rows="4" maxlength="30" oninput="checkReviewLength()"></textarea>
+                    <input type="hidden" name="rating" id="rating-value" value="0">
+                    <button type="submit" id="submit-review-button" class="submit-review-button" disabled>등록</button>
+                </form>
+                <p id="char-count" class="char-count">0/30</p> 
             {% else %}
-            <p> <a href="/login" class="login">로그인</a> 후 리뷰를 작성할 수 있습니다.</p>
+                <p><a href="/login" class="login">로그인</a> 후 리뷰를 작성할 수 있습니다.</p>
             {% endif %}
         </div>
     </div>
 
-    <script>
-        function toggleFavorite() {//'userFollow'가 true이면 빨간 하트
-            const heartIcon = document.getElementById('heart-icon');
-            if (heartIcon.src.includes("emptyHeart")) {
-                heartIcon.src = "/images/redHeart.png";
-            } else {
-                heartIcon.src = "/images/emptyHeart.png";
-            }
-        }
+<script>
+    let currentSortCriteria = "latest"; // 기본값은 최신순
 
-        function setRating(rating) {
+    // 페이지가 로드될 때 기본적으로 최신순으로 정렬
+    document.addEventListener("DOMContentLoaded", function () {
+        // 리뷰 날짜 포맷팅 및 data-date 설정
+        const dateElements = document.querySelectorAll(".review-date");
+        dateElements.forEach(dateElement => {
+            let dateString = dateElement.innerText.trim();
+
+            // `new Date()`로 변환이 가능한 형식이라면, Date 객체로 변환
+            const date = new Date(dateString);
+
+            if (!isNaN(date)) {
+                // Date 객체를 "YYYY-MM-DD HH:MM" 형식으로 변환
+                const formattedDate = date.getFullYear() + '-' 
+                    + String(date.getMonth() + 1).padStart(2, '0') + '-' 
+                    + String(date.getDate()).padStart(2, '0') + ' ' 
+                    + String(date.getHours()).padStart(2, '0') + ':' 
+                    + String(date.getMinutes()).padStart(2, '0');
+                
+                // 리뷰 날짜를 포맷팅한 값으로 업데이트
+                dateElement.innerText = formattedDate;
+
+                // data-date 속성에 ISO 형식으로 저장 (정렬을 위한 날짜 저장)
+                dateElement.closest('.review-item').dataset.date = date.toISOString();
+            } else {
+                console.error("Invalid date format:", dateString); // 잘못된 날짜일 경우 오류 메시지
+            }
+        });
+
+        // 날짜 설정이 완료된 후 정렬
+        sortReviews("latest");
+    });
+
+    function setRating(rating) {
             const stars = document.querySelectorAll('#star-rating img');
             stars.forEach((star, index) => {
                 star.src = index < rating ? "/images/yellowStar.png" : "/images/emptyStar.png";
             });
-            document.getElementById('rating-value').value = rating;  // 선택한 별점을 hidden input에 저장
+            document.getElementById('rating-value').value = rating;
         }
 
-    </script>
+    // 리뷰 정렬 함수
+    function sortReviews(criteria) {
+        const reviewList = document.getElementById('review-list');
+        const reviews = Array.from(reviewList.getElementsByClassName('review-item'));
+
+        reviews.sort((a, b) => {
+            if (criteria === "latest") {
+                return new Date(b.dataset.date) - new Date(a.dataset.date);  // 최신순 정렬
+            } else if (criteria === "high-rating") {
+                return b.dataset.rating - a.dataset.rating;  // 별점 높은 순 정렬
+            } else if (criteria === "low-rating") {
+                return a.dataset.rating - b.dataset.rating;  // 별점 낮은 순으로 정렬
+            }    
+        });
+
+        // 정렬된 리뷰를 DOM에 다시 추가
+        reviews.forEach(review => reviewList.appendChild(review));
+
+        // 스크롤을 맨 위로 이동
+        reviewList.scrollTop = 0;
+    }
+
+    // 정렬 토글 버튼 클릭 이벤트 (버튼이 존재할 경우)
+    const sortButton = document.getElementById('sort-button');
+    if (sortButton) {
+        sortButton.addEventListener('click', function() {
+            currentSortCriteria = currentSortCriteria === "latest" ? "high-rating" : "latest";
+            sortReviews(currentSortCriteria);
+        });
+    }
+
+    // 찜 토글 함수
+    function toggleFavorite() {
+        const heartIcon = document.getElementById('heart-icon');
+        const favoriteContainer = document.getElementById('favorite-container');
+        const isUserLoggedIn = favoriteContainer.getAttribute('data-logged-in') === 'true';
+        const url = `/follow/{{ res.id }}`;
+        const redirectUrl = `/restaurant/res/{{ res.id }}`;
+
+        if (!isUserLoggedIn) {
+            alert("로그인 후 이용할 수 있습니다.");
+            return;
+        }
+
+        if (heartIcon.src.includes("emptyHeart")) {
+            fetch(url, { method: 'POST' })
+                .then(response => {
+                    if (response.ok) {
+                        heartIcon.src = "/images/redHeart.png";
+                        window.location.href = redirectUrl;
+                        alert("해당 음식점을 찜했습니다.");
+                    } else {
+                        alert("찜 요청에 실패했습니다.");
+                    }
+                })
+                .catch(error => console.error('찜 요청 오류:', error));
+        } else {
+            fetch(url, { method: 'DELETE' })
+                .then(response => {
+                    if (response.ok) {
+                        heartIcon.src = "/images/emptyHeart.png";
+                        window.location.href = redirectUrl;
+                        alert("찜을 취소했습니다.");
+                    } else {
+                        alert("찜 취소 요청에 실패했습니다.");
+                    }
+                })
+                .catch(error => console.error('찜 취소 요청 오류:', error));
+        }
+    }
+
+    // 별점 클릭 시 호출되는 함수
+    function setRating(rating) {
+        const stars = document.querySelectorAll('#star-rating img');
+        stars.forEach((star, index) => {
+            star.src = index < rating ? "/images/yellowStar.png" : "/images/emptyStar.png";
+        });
+        document.getElementById('rating-value').value = rating;
+        checkReviewLength();  // 별점을 클릭할 때마다 체크
+    }
+
+    // 리뷰 길이 및 별점 체크 함수
+    function checkReviewLength() {
+        const reviewContent = document.getElementById('review-content');
+        const submitButton = document.getElementById('submit-review-button');
+        const charCount = document.getElementById('char-count');
+        const ratingValue = document.getElementById('rating-value').value;
+
+        // 댓글 길이 체크
+        if (reviewContent.value.length > 30) {
+            submitButton.disabled = true;
+            charCount.textContent = '30자 이하로 작성해주세요.';
+        } else {
+            charCount.textContent = `${reviewContent.value.length}/30`;
+        }
+
+        // 댓글과 별점이 모두 있을 때만 버튼 활성화
+        if (reviewContent.value !== "" && ratingValue !== "0") {
+            submitButton.disabled = false;
+            submitButton.classList.add('active');
+        } else {
+            submitButton.disabled = true;
+            submitButton.classList.remove('active');
+        }
+    }
+
+    // 리뷰 내용 입력 시 체크
+    document.getElementById('review-content').addEventListener('input', checkReviewLength);
+
+</script>
+
 </body>
 </html>
