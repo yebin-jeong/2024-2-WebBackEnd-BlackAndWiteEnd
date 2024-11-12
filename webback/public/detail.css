@@ -10,7 +10,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 100%;
     padding: 20px;
   }
   
@@ -56,7 +56,7 @@
     font-size: 1.5em;
     color: #2c3e50;
   }
-  
+
   .map-link {
     color: #3498db;
     text-decoration: none;
@@ -97,15 +97,24 @@
     color: #7f8c8d;
   }
   
-  .review-list {
-    margin: 20px 0;
+  #review-list {
+    display: flex;
+    flex-direction: column;
+    height: 63vh; 
+    padding: 20px;
+    background-color: #f9f9f9;
+    overflow: hidden; 
+    overflow-y: scroll;  /* 세로 스크롤 활성화 */
   }
+  
 
   .review-item {
-    margin-bottom: 10px;
-    padding: 8px;
-    background-color: #f9f9f9;
+    background-color: #fff;
+    border: 1px solid #ddd;
     border-radius: 5px;
+    margin-bottom: 10px;
+    padding: 15px;
+    transition: background-color 0.3s ease;
   }
 
   .review-text {
@@ -148,22 +157,88 @@
     margin-right: 5px;
   }
   
-  .submit-review-button {
-    background-color: #e67e22;
-    color: #fff;
-    padding: 10px 15px;
+  /* 기본 등록 버튼 스타일 (비활성화 상태) */
+  #submit-review-button {
+    background-color: #ccc; /* 회색 배경 */
+    color: #fff; /* 흰색 글씨 */
+    cursor: not-allowed; /* 비활성화 시 커서 변경 */
     border: none;
+    padding: 10px 20px;
     border-radius: 5px;
-    cursor: pointer;
-    font-size: 0.9em;
-    float: right;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease-in-out;
   }
-  
-  .submit-review-button:hover {
-    background-color: #d35400;
+
+  /* 등록 버튼 활성화 상태 (주황색) */
+  #submit-review-button.active {
+    background-color: #f8a300; /* 주황색 배경 */
+    cursor: pointer; /* 활성화된 버튼에서는 커서 변경 */
   }
   
   .login {
     text-decoration: none;
   }
+
+  .review-item {
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.review-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 5px;
+}
+
+.review-date {
+    font-size: 0.85em;
+    color: #666;
+    margin-left: auto;
+}
+
+#char-count {
+  font-size: 12px;
+  color: gray;
+  position: absolute;
+  right: 10px;
+  bottom: 0px;
+}
+
+.review-section {
+  position: relative;
+}
+
+
+/* 정렬 옵션 컨테이너 */
+.sort-options {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+/* 드롭다운 기본 스타일 */
+#sort {
+  padding: 8px 14px;
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  appearance: none;  /* 기본 드롭다운 화살표 제거 */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 150px; /* 적당한 너비 설정 */
+  position: relative;
+}
+
+/* 포커스 시 스타일 */
+#sort:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
