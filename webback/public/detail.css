@@ -100,7 +100,7 @@
   #review-list {
     display: flex;
     flex-direction: column;
-    height: 490px; 
+    height: 63vh; 
     padding: 20px;
     background-color: #f9f9f9;
     overflow: hidden; 
