@@ -113,9 +113,19 @@
 
           restaurants.sort((a, b) => {
               if (criteria === "reviewCount") {
-                  return parseInt(b.querySelector('.reviewCount').textContent) - parseInt(a.querySelector('.reviewCount').textContent); // 리뷰순 정렬
+                  const reviewCountA = parseInt(a.querySelector('.rating').textContent.match(/\((\d+)\)/)[1]);
+                  const reviewCountB = parseInt(b.querySelector('.rating').textContent.match(/\((\d+)\)/)[1]);
+
+                  return reviewCountB - reviewCountA; // 리뷰순 정렬 (내림차순)
+                  //return parseInt(b.querySelector('.reviewCount').textContent) - parseInt(a.querySelector('.reviewCount').textContent); // 리뷰순 정렬
               } else if (criteria === "avgRating") {
-                  return parseFloat(b.querySelector('.avgRating').textContent) - parseFloat(a.querySelector('.avgRating').textContent); // 별점순 정렬
+                // 평균 별점 추출
+                  const avgRatingA = parseFloat(a.querySelector('.rating').textContent.split('(')[0].trim());
+                  const avgRatingB = parseFloat(b.querySelector('.rating').textContent.split('(')[0].trim());
+
+                  return avgRatingB - avgRatingA; // 별점순 정렬 (내림차순)
+
+                  //return parseFloat(b.querySelector(b.avgRating).textContent) - parseFloat(a.querySelector(a.avgRating).dataset.avgRating); // 별점순 정렬
               } else if (criteria === "followCount") {
                   return parseInt(b.querySelector('.like-count').textContent) - parseInt(a.querySelector('.like-count').textContent); // 찜 많은순 정렬
               }
