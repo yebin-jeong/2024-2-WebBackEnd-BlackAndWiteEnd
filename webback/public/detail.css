@@ -4,7 +4,6 @@
     box-sizing: border-box;
   }
   
-  
   body {
     font-family: Arial, sans-serif;
     display: flex;
@@ -12,8 +11,7 @@
     align-items: center;
     height: 100%;
   }
-  
-/* 전체 컨테이너 */
+
 .restaurant-detail {
   display: flex;
   flex-direction: column;
@@ -27,7 +25,7 @@
   .header {
     display: flex;
     align-items: flex-start;
-    margin-top: 20px;
+    margin-top: 20px; 
   }
 
   .header-info {
@@ -249,4 +247,15 @@
   outline: none;
   border-color: #007bff;
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+
+.review-list::-webkit-scrollbar, .half::-webkit-scrollbar {
+  width: 8px;
+}
+
+.review-list::-webkit-scrollbar-thumb, .half::-webkit-scrollbar-thumb {
+  background-color: #ffcd70;
+  border-radius: 10px;
+  border: 2px solid #f1f1f1;
 }
