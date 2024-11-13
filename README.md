@@ -61,9 +61,4 @@
 
 
 
-<br><br>
-![copyright](https://github.com/user-attachments/assets/86e0a1c9-c081-4340-b141-f1cdd5b3d9c6)
-
-
-
 
