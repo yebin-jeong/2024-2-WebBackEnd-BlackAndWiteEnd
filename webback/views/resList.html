@@ -102,6 +102,10 @@
       }
 
       // 식당 목록 정렬 함수
+      document.addEventListener("DOMContentLoaded", () => {
+    // 페이지가 로드되면 "reviewCount" 기준으로 정렬 실행
+    sortRestaurants("reviewCount");});
+
       document.getElementById("reviewFilter").addEventListener("click", () => sortRestaurants("reviewCount"));
       document.getElementById("ratingFilter").addEventListener("click", () => sortRestaurants("avgRating"));
       document.getElementById("likeFilter").addEventListener("click", () => sortRestaurants("followCount"));
