@@ -9,23 +9,49 @@
 <body>
   <div class="container">
     <div class="header">
-      <span id="location-toggle">충무로</span> <!-- 지역 선택 -->
+      <div class="location-toggle-container">
+        <button id="location-toggle" class="location-button">충무로</button>
+        <img src="/images/down_arrow.png" alt="토글 아이콘" class="toggle-icon" id="dropdownToggle">
+        <div class="dropdown-menu" id="locationDropdownMenu">
+          <button class="dropdown-item" id="chungmuroButton">충무로</button>
+          <button class="dropdown-item" id="donggukButton">동입</button>
+        </div>
+      </div>
+      <div class="menu-container">
+        <img src="/images/resList_menu.png" alt="메뉴" class="menu-icon" id="menuButton">
+        <div class="dropdown-menu" id="dropdownMenu">
+          {% if user %}
+            <!-- 로그인 상태일 때 -->
+            <button id="profileButton" class="dropdown-item"><a href="/profile">내 프로필</a></button>
+            <button id="logoutButton" class="dropdown-item"><a href="/auth/logout">로그아웃</a></button>
+          {% else %}
+            <!-- 비로그인 상태일 때 -->
+            <button id="loginButton" class="dropdown-item"><a href="/login">로그인</a></button>
+            <button id="signupButton" class="dropdown-item"><a href="/join">회원가입</a></button>
+          {% endif %}
+        </div>        
+      </div>
     </div>    
     <input type="text" placeholder="맛집을 검색해 보세요" class="search-input" /> 
-    
     <div class="recommendation">
       <button id="reviewFilter" class="filter-button">리뷰순</button> <!-- 리뷰순 정렬 버튼 -->
       <button id="ratingFilter" class="filter-button">별점순</button> <!-- 별점순 정렬 버튼 -->
-      <button id="likeFilter" class="filter-button">추천순</button> <!-- 찜 개수순 정렬 버튼 -->
+      <button id="likeFilter" class="filter-button">찜 많은순</button> <!-- 찜 개수순 정렬 버튼 -->
       <div class="restaurant-list">
         {% if restaurants %}
           {% for res in restaurants %}
-            <div class="restaurant-item"> 
-              <a href="/restaurant/res/{{res.id}}">               
-              <img src="/images/{{res.id}}.jpg" alt="{{res.name}} 사진" class="restaurant-icon">
+            <div class="restaurant-item">
+              <!-- 왼쪽: 이미지 -->
+              <div class="restaurant-image">
+                <a href="/restaurant/res/{{res.id}}">
+                  <img src="/images/{{res.id}}.jpg" alt="{{res.name}} 사진" class="restaurant-icon" onerror="this.src='/images/img_none.png';">
+                </a>
+              </div>
+      
+              <!-- 오른쪽: 텍스트 내용 -->
               <div class="restaurant-content">
-                <h3>{{res.name}}</h3> 
-                <p>{{res.description}}</p> 
+                <h3>{{res.name}}</h3>
+                <p>{{res.description}}</p>
                 <div class="rating">
                   <img src="/images/yellowStar.png" alt="별점" class="star-icon"> {{res.avgRating}} ({{res.reviewCount}}) <!-- 별점과 리뷰 개수 -->
                 </div>
@@ -33,13 +59,14 @@
                   <button class="like-button">
                     <img src="/images/redHeart.png" alt="찜" class="heart-icon">
                   </button>
-                  <div class="like-count">{{res.followCount}}</div> <!-- 찜 개수 표시 -->
+                  <div class="like-count">{{res.followCount}}</div>
                 </div>
-            </div>
+              </div>
             </div>
           {% endfor %}
         {% endif %}
       </div>
+     
     </div>
   </div>
   <script>
@@ -73,6 +100,97 @@
               }
           });
       }
+
+      // 식당 목록 정렬 함수
+      document.getElementById("reviewFilter").addEventListener("click", () => sortRestaurants("reviewCount"));
+      document.getElementById("ratingFilter").addEventListener("click", () => sortRestaurants("avgRating"));
+      document.getElementById("likeFilter").addEventListener("click", () => sortRestaurants("followCount"));
+
+
+      function sortRestaurants(criteria) {
+          const restaurantList = document.querySelector('.restaurant-list');
+          const restaurants = Array.from(restaurantList.getElementsByClassName('restaurant-item'));
+
+          restaurants.sort((a, b) => {
+              if (criteria === "reviewCount") {
+                  return parseInt(b.querySelector('.reviewCount').textContent) - parseInt(a.querySelector('.reviewCount').textContent); // 리뷰순 정렬
+              } else if (criteria === "avgRating") {
+                  return parseFloat(b.querySelector('.avgRating').textContent) - parseFloat(a.querySelector('.avgRating').textContent); // 별점순 정렬
+              } else if (criteria === "followCount") {
+                  return parseInt(b.querySelector('.like-count').textContent) - parseInt(a.querySelector('.like-count').textContent); // 찜 많은순 정렬
+              }
+          });
+
+          // 정렬된 식당을 DOM에 다시 추가
+          restaurants.forEach(restaurant => restaurantList.appendChild(restaurant));
+
+          // 스크롤을 맨 위로 이동
+          restaurantList.scrollTop = 0;
+      }
+      
+
+      const menuButton = document.getElementById("menuButton");
+      const dropdownMenu = document.getElementById("dropdownMenu");
+
+      menuButton.addEventListener("click", () => {
+          dropdownMenu.style.display = dropdownMenu.style.display === "block" ? "none" : "block";
+      });
+
+      // 페이지 다른 곳을 클릭하면 드롭다운 메뉴 숨기기
+      document.addEventListener("click", (event) => {
+          if (!menuButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
+              dropdownMenu.style.display = "none";
+          }
+      });
+
+      const locationToggle = document.getElementById("location-toggle");
+      const dropdownToggle = document.getElementById("dropdownToggle");
+      const locationDropdownMenu = document.getElementById("locationDropdownMenu");
+      const chungmuroButton = document.getElementById("chungmuroButton");
+      const donggukButton = document.getElementById("donggukButton");
+
+      // 드롭다운 메뉴 버튼 클릭 시 텍스트 변경 및 페이지 이동
+      chungmuroButton.addEventListener("click", (event) => {
+          event.preventDefault(); // 페이지 이동 전 이벤트 방지
+          locationToggle.textContent = "충무로"; // 텍스트 변경
+          setTimeout(() => {
+              window.location.href = "/restaurant/chungmuro"; // 페이지 이동
+          }, 100); // 텍스트 변경 후 이동
+      });
+
+      donggukButton.addEventListener("click", (event) => {
+          event.preventDefault(); // 페이지 이동 전 이벤트 방지
+          locationToggle.textContent = "동입"; // 텍스트 변경
+          setTimeout(() => {
+              window.location.href = "/restaurant/dongguk"; // 페이지 이동
+          }, 100); // 텍스트 변경 후 이동
+      });
+
+      // 드롭다운 메뉴 토글
+      dropdownToggle.addEventListener("click", () => {
+          locationDropdownMenu.style.display = locationDropdownMenu.style.display === "block" ? "none" : "block";
+      });
+
+      // 페이지 외부 클릭 시 드롭다운 메뉴 닫기
+      document.addEventListener("click", (event) => {
+          if (!dropdownToggle.contains(event.target) && !locationDropdownMenu.contains(event.target)) {
+              locationDropdownMenu.style.display = "none";
+          }
+      });
+
+      document.addEventListener("DOMContentLoaded", () => {
+              const locationToggle = document.getElementById("location-toggle");
+
+              // 현재 URL 경로에서 위치를 확인
+              const currentPath = window.location.pathname;
+
+              // URL 경로에 따라 location-toggle의 텍스트 변경
+              if (currentPath.includes("/restaurant/dongguk")) {
+                  locationToggle.textContent = "동입";
+              } else if (currentPath.includes("/restaurant/chungmuro")) {
+                  locationToggle.textContent = "충무로";
+              }
+          });
   </script>
 </body>
 </html>
