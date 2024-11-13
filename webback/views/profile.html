@@ -26,15 +26,14 @@
           {% endif %}
         </div>
 
-        <!-- 주황색 컨테이너 안에 찜목록과 리뷰 영역 합치기 -->
         <div class="my-page">
           <img src="images/cook.png" id="cook">
           
-          <!-- 작성한 리뷰 제목 및 스크롤 영역 -->
           <h2>작성한 리뷰</h2>
           <div class="reviews">
             {% if reviews.length > 0 %}
               {% for review in reviews %}
+              <a href="/restaurant/res/{{ review.restaurant.id }}" class="review-link">
               <div class="review-item">
                 <h4>{{ review.restaurant.name }}</h4>
                 <div class="review-details">
@@ -48,32 +47,29 @@
                     <span>날짜 정보 없음</span>
                   {% endif %}
                 </span>
-              </div>              
+              </div>  
+            </a>            
               {% endfor %}
             {% else %}
               <p>작성한 리뷰가 없습니다.</p>
             {% endif %}
           </div>
           
-          <!-- 찜 목록 개수 제목 및 스크롤 영역 -->
           <h2>찜 목록 개수: {{followingCount}}</h2>
-          <div class="timeline">
-            <div class="followings">
-              <div class="follow-list">
-                {% if user.Followings %}
-                  {% for following in user.Followings %}
-                    <div class="following-card">
-                      <a href="/restaurant/res/{{ following.id }}">
-                        <div class="following-content">
-                          <h4>{{ following.name }}</h4>
-                          <p>자세한 정보 보기</p>
-                        </div>
-                      </a>
-                    </div>
-                  {% endfor %}
-                {% endif %}
-              </div>
-            </div>
+          <div class="followings">
+            {% if user.Followings %}
+              {% for following in user.Followings %}
+              <a href="/restaurant/res/{{ following.id }}" class="following-link">
+                <div class="following-card">
+                  <img src="/images/{{ following.id }}.jpg" alt="{{ following.name }} 이미지" class="following-image" onerror="this.src='/images/img_none.png'">
+                  <div class="following-details">
+                    <h4>{{ following.name }}</h4>
+                    <span class="heart">❤️</span>
+                  </div>
+                </div>
+              </a>
+              {% endfor %}
+            {% endif %}
           </div>
         </div>
       </div>
