@@ -58,7 +58,7 @@
       {% if user.Followings %}
         {% for following in user.Followings %}
           <div>
-            <a href="/restaurant/{{ following.id }}">{{ following.name }}</a>
+            <a href="/restaurant/res/{{ following.id }}">{{ following.name }}</a>
           </div>
         {% endfor %}
       {% endif %}
