@@ -97,12 +97,19 @@ body {
   max-width: 700px; 
 }
 
-.restaurant-icon {
+/* .restaurant-icon {
   flex: 1;
   height: 180px;
   border-radius: 8px;
   object-fit: cover;
   margin-right: 15px;
+} */
+.restaurant-icon {
+  width: 150px; /* 높이와 동일한 너비 설정 */
+  height: 130px;
+  border-radius: 10%; /* 원형 모양으로 변경 (정사각형에서 둥글게) */
+  object-fit: cover; /* 이미지를 컨테이너에 맞추되, 종횡비 유지 */
+  float: left; /* 이미지를 왼쪽에 배치 */
 }
 
 .restaurant-content {
