@@ -10,7 +10,7 @@ body, html {
 }
 
 /* 페이지 전체 컨테이너 */
-.wrapper {
+/* .wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -19,7 +19,7 @@ body, html {
 }
 
 /* 콘텐츠를 담는 박스 */
-.container {
+/* .container {
   background-color: #fff;
   padding: 20px;
   max-width: 420px;
@@ -28,6 +28,18 @@ body, html {
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+} */
+
+.profile-wrap {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  padding: 20px;
+  width: 420px;
+  margin: auto;
+  box-sizing: border-box;
+  height: auto;
+  overflow-y: auto;
 }
 
 /* 헤더 영역 */
@@ -142,7 +154,7 @@ a {
   background-color: transparent;
   padding: 10px;
   overflow-y: auto;
-  max-height: 250px;
+  max-height: 300px;
   margin-top: 0
 }
 
