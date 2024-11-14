@@ -12,15 +12,14 @@
     height: 100%;
   }
 
-.restaurant-detail {
-  display: flex;
-  flex-direction: column;
-  background-color: #fff;
-  padding: 20px;
-  height: 100vh; /* 화면의 전체 높이를 사용 */
-  max-width: 420px;
-  box-sizing: border-box;
-}
+  .container, .restaurant-detail {
+    width: 100%;
+    max-width: 420px; 
+    margin: auto;
+    padding: 20px; 
+    box-sizing: border-box;
+    height: auto; 
+  }
 
   .header {
     display: flex;

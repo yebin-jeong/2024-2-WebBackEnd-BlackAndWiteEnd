@@ -9,16 +9,11 @@
 <body>
   <div class="container">
     <div class="header">
-      <div class="location-toggle-container">
-        <button id="location-toggle" class="location-button">충무로</button>
-        <img src="/images/down_arrow.png" alt="토글 아이콘" class="toggle-icon" id="dropdownToggle">
-        <div class="dropdown-menu" id="locationDropdownMenu">
-          <button class="dropdown-item" id="chungmuroButton">충무로</button>
-          <button class="dropdown-item" id="donggukButton">동입</button>
-        </div>
+      <div class="logo-container">
+        <img src="/images/logo.png" alt="로고" class="logo">
       </div>
       <div class="menu-container">
-        <img src="/images/resList_menu.png" alt="메뉴" class="menu-icon" id="menuButton">
+        <img src="/images/rightmenu.png" alt="메뉴" class="menu-icon" id="menuButton">
         <div class="dropdown-menu" id="dropdownMenu">
           {% if user %}
             <!-- 로그인 상태일 때 -->
@@ -34,39 +29,43 @@
     </div>    
     <input type="text" placeholder="맛집을 검색해 보세요" class="search-input" /> 
     <div class="recommendation">
-      <button id="reviewFilter" class="filter-button">리뷰순</button> <!-- 리뷰순 정렬 버튼 -->
-      <button id="ratingFilter" class="filter-button">별점순</button> <!-- 별점순 정렬 버튼 -->
-      <button id="likeFilter" class="filter-button">찜 많은순</button> <!-- 찜 개수순 정렬 버튼 -->
+      <div class="sort-options">
+        <select id="sortOptions" class="styled-select" onchange="sortRestaurants(this.value)">
+          <option value="reviewCount">리뷰순</option>
+          <option value="avgRating">별점순</option>
+          <option value="followCount">찜 많은순</option>
+        </select>
+      </div>
+      <div class="location-menu">
+        <button class="location-button" id="chungmuroButton">충무로</button>
+        <button class="location-button" id="donggukButton">동입</button>
+      </div>
       <div class="restaurant-list">
         {% if restaurants %}
           {% for res in restaurants %}
-            <div class="restaurant-item">
-              <!-- 왼쪽: 이미지 -->
-              <div class="restaurant-image">
-                <a href="/restaurant/res/{{res.id}}">
-                  <img src="/images/{{res.id}}.jpg" alt="{{res.name}} 사진" class="restaurant-icon" onerror="this.src='/images/img_none.png';">
-                </a>
+          <div class="restaurant-item" onclick="window.location.href='/restaurant/res/{{res.id}}'">
+            
+            <div class="restaurant-image">
+              <img src="/images/{{res.id}}.jpg" alt="{{res.name}} 사진" class="restaurant-icon" onerror="this.src='/images/img_none.png';">
+            </div>
+            
+            <div class="restaurant-content">
+              <h3>{{res.name}}</h3>
+              <p>{{res.description}}</p>
+              <div class="rating">
+                <img src="/images/yellowStar.png" alt="별점" class="star-icon"> {{res.avgRating}} ({{res.reviewCount}})
               </div>
-      
-              <!-- 오른쪽: 텍스트 내용 -->
-              <div class="restaurant-content">
-                <h3>{{res.name}}</h3>
-                <p>{{res.description}}</p>
-                <div class="rating">
-                  <img src="/images/yellowStar.png" alt="별점" class="star-icon"> {{res.avgRating}} ({{res.reviewCount}}) <!-- 별점과 리뷰 개수 -->
+              <div class="like-section">
+                <div class="like-button" style="pointer-events: none;">
+                  <img src="/images/redHeart.png" alt="찜" class="heart-icon">
                 </div>
-                <div class="like-section">
-                  <button class="like-button">
-                    <img src="/images/redHeart.png" alt="찜" class="heart-icon">
-                  </button>
-                  <div class="like-count">{{res.followCount}}</div>
-                </div>
+                <div class="like-count">{{res.followCount}}</div>
               </div>
             </div>
+          </div>
           {% endfor %}
         {% endif %}
-      </div>
-     
+      </div>      
     </div>
   </div>
   <script>
@@ -101,48 +100,6 @@
           });
       }
 
-      // 식당 목록 정렬 함수
-      document.addEventListener("DOMContentLoaded", () => {
-    // 페이지가 로드되면 "reviewCount" 기준으로 정렬 실행
-    sortRestaurants("reviewCount");});
-
-      document.getElementById("reviewFilter").addEventListener("click", () => sortRestaurants("reviewCount"));
-      document.getElementById("ratingFilter").addEventListener("click", () => sortRestaurants("avgRating"));
-      document.getElementById("likeFilter").addEventListener("click", () => sortRestaurants("followCount"));
-
-
-      function sortRestaurants(criteria) {
-          const restaurantList = document.querySelector('.restaurant-list');
-          const restaurants = Array.from(restaurantList.getElementsByClassName('restaurant-item'));
-
-          restaurants.sort((a, b) => {
-              if (criteria === "reviewCount") {
-                  const reviewCountA = parseInt(a.querySelector('.rating').textContent.match(/\((\d+)\)/)[1]);
-                  const reviewCountB = parseInt(b.querySelector('.rating').textContent.match(/\((\d+)\)/)[1]);
-
-                  return reviewCountB - reviewCountA; // 리뷰순 정렬 (내림차순)
-                  //return parseInt(b.querySelector('.reviewCount').textContent) - parseInt(a.querySelector('.reviewCount').textContent); // 리뷰순 정렬
-              } else if (criteria === "avgRating") {
-                // 평균 별점 추출
-                  const avgRatingA = parseFloat(a.querySelector('.rating').textContent.split('(')[0].trim());
-                  const avgRatingB = parseFloat(b.querySelector('.rating').textContent.split('(')[0].trim());
-
-                  return avgRatingB - avgRatingA; // 별점순 정렬 (내림차순)
-
-                  //return parseFloat(b.querySelector(b.avgRating).textContent) - parseFloat(a.querySelector(a.avgRating).dataset.avgRating); // 별점순 정렬
-              } else if (criteria === "followCount") {
-                  return parseInt(b.querySelector('.like-count').textContent) - parseInt(a.querySelector('.like-count').textContent); // 찜 많은순 정렬
-              }
-          });
-
-          // 정렬된 식당을 DOM에 다시 추가
-          restaurants.forEach(restaurant => restaurantList.appendChild(restaurant));
-
-          // 스크롤을 맨 위로 이동
-          restaurantList.scrollTop = 0;
-      }
-      
-
       const menuButton = document.getElementById("menuButton");
       const dropdownMenu = document.getElementById("dropdownMenu");
 
@@ -163,21 +120,15 @@
       const chungmuroButton = document.getElementById("chungmuroButton");
       const donggukButton = document.getElementById("donggukButton");
 
-      // 드롭다운 메뉴 버튼 클릭 시 텍스트 변경 및 페이지 이동
+      // 드롭다운 메뉴 버튼 클릭 시 페이지 이동
       chungmuroButton.addEventListener("click", (event) => {
           event.preventDefault(); // 페이지 이동 전 이벤트 방지
-          locationToggle.textContent = "충무로"; // 텍스트 변경
-          setTimeout(() => {
-              window.location.href = "/restaurant/chungmuro"; // 페이지 이동
-          }, 100); // 텍스트 변경 후 이동
+          window.location.href = "/restaurant/chungmuro"; // 페이지 이동
       });
 
       donggukButton.addEventListener("click", (event) => {
           event.preventDefault(); // 페이지 이동 전 이벤트 방지
-          locationToggle.textContent = "동입"; // 텍스트 변경
-          setTimeout(() => {
-              window.location.href = "/restaurant/dongguk"; // 페이지 이동
-          }, 100); // 텍스트 변경 후 이동
+          window.location.href = "/restaurant/dongguk"; // 페이지 이동
       });
 
       // 드롭다운 메뉴 토글
@@ -205,6 +156,46 @@
                   locationToggle.textContent = "충무로";
               }
           });
+
+      // 식당 목록 정렬 함수
+      function sortRestaurants(criteria) {
+          const restaurantList = document.querySelector('.restaurant-list');
+          const restaurants = Array.from(restaurantList.getElementsByClassName('restaurant-item'));
+
+          // 정렬 기준에 따라 정렬
+          restaurants.sort((a, b) => {
+              if (criteria === "reviewCount") {
+                  const reviewTextA = a.querySelector('.rating').textContent.match(/\((\d+)\)/);
+                  const reviewTextB = b.querySelector('.rating').textContent.match(/\((\d+)\)/);
+
+                  const reviewCountA = reviewTextA ? parseInt(reviewTextA[1]) : 0;
+                  const reviewCountB = reviewTextB ? parseInt(reviewTextB[1]) : 0;
+
+                  return reviewCountB - reviewCountA; // 리뷰순 정렬 (내림차순)
+              } else if (criteria === "avgRating") {
+                  const avgRatingA = parseFloat(a.querySelector('.rating').textContent.split('(')[0].trim()) || 0;
+                  const avgRatingB = parseFloat(b.querySelector('.rating').textContent.split('(')[0].trim()) || 0;
+
+                  return avgRatingB - avgRatingA; // 별점순 정렬 (내림차순)
+              } else if (criteria === "followCount") {
+                  const followCountA = parseInt(a.querySelector('.like-count').textContent) || 0;
+                  const followCountB = parseInt(b.querySelector('.like-count').textContent) || 0;
+
+                  return followCountB - followCountA; // 찜 많은순 정렬 (내림차순)
+              }
+          });
+
+          // 정렬된 식당을 DOM에 다시 추가
+          restaurants.forEach(restaurant => restaurantList.appendChild(restaurant));
+
+          // 스크롤을 맨 위로 이동
+          restaurantList.scrollTop = 0;
+      }
+
+      // 드롭다운 선택 시 이벤트 리스너 추가 (기존 HTML onchange 속성 대체 가능)
+      document.getElementById('sortOptions').addEventListener('change', (event) => {
+          sortRestaurants(event.target.value);
+      });    
   </script>
 </body>
 </html>
