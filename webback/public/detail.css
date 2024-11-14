@@ -10,6 +10,8 @@
     justify-content: center;
     align-items: center;
     height: 100%;
+    font-family: 'Roboto', sans-serif;
+    background-color: #F5F5F5;
   }
 
   .container, .restaurant-detail {
@@ -19,6 +21,7 @@
     padding: 20px; 
     box-sizing: border-box;
     height: auto; 
+    background-color: white;
   }
 
   .header {
@@ -126,7 +129,7 @@
     font-size: 0.9em;
   }
 
-  .review-rating {
+  .review-rating { 
     font-size: 0.9em;
     color: #f39c12;
   }
@@ -135,11 +138,13 @@
     margin-top: 20px;
   }
   
-  .review-section h2 {
+  .review-section h2, h2 {
     font-size: 1.2em;
     color: #333;
     margin-bottom: 10px;
   }
+
+ 
   
   textarea {
     width: 100%;

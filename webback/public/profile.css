@@ -7,6 +7,7 @@ body, html {
   align-items: center;
   height: 100vh;
   font-family: 'Roboto', sans-serif;
+  background-color: #F5F5F5;
 }
 
 /* 페이지 전체 컨테이너 */
@@ -38,7 +39,7 @@ body, html {
   width: 420px;
   margin: auto;
   box-sizing: border-box;
-  height: auto;
+  height: 100vh;
   overflow-y: auto;
 }
 
@@ -47,23 +48,33 @@ body, html {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
   padding-bottom: 10px;
   border-bottom: 2px solid #e0e0e0;
+}
+
+.image-greeting-wrapper {
+  display: flex;
+  align-items: center; 
+  padding: 10px; 
+  background-color:#ffe49f; 
+  border-radius: 10px; 
+  max-width: 500px; 
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#cook {
+  max-width: 90px;
+  height: auto;
+  margin-right: 20px; 
 }
 
 .greeting {
   font-size: 18px;
   font-weight: bold;
-  color: #444;
+  color: #4a4a4a;
 }
 
-/* 이미지 사이즈 조정 */
-img {
-  max-width: 90px;
-  height: auto; 
-  object-fit: contain; 
-}
 
 /* 링크 스타일: 밑줄 제거 */
 a {
@@ -82,7 +93,7 @@ a {
   background-color: #ffefc5;
   padding: 20px;
   border-radius: 10px;
-  margin-top: 20px;
+  margin-top: 0;
   text-align: center;
   height: 83vh;
   overflow: hidden;
@@ -155,7 +166,7 @@ a {
   padding: 10px;
   overflow-y: auto;
   max-height: 300px;
-  margin-top: 0
+  margin-top: 0;
 }
 
 .following-card {

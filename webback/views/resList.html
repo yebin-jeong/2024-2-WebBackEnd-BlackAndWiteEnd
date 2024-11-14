@@ -10,17 +10,15 @@
   <div class="container">
     <div class="header">
       <div class="logo-container">
-        <img src="/images/logo.png" alt="로고" class="logo">
+        <img src="/images/resList_logo.png" alt="로고" class="logo">
       </div>
       <div class="menu-container">
         <img src="/images/rightmenu.png" alt="메뉴" class="menu-icon" id="menuButton">
         <div class="dropdown-menu" id="dropdownMenu">
           {% if user %}
-            <!-- 로그인 상태일 때 -->
             <button id="profileButton" class="dropdown-item"><a href="/profile">내 프로필</a></button>
             <button id="logoutButton" class="dropdown-item"><a href="/auth/logout">로그아웃</a></button>
           {% else %}
-            <!-- 비로그인 상태일 때 -->
             <button id="loginButton" class="dropdown-item"><a href="/login">로그인</a></button>
             <button id="signupButton" class="dropdown-item"><a href="/join">회원가입</a></button>
           {% endif %}
@@ -37,18 +35,16 @@
         </select>
       </div>
       <div class="location-menu">
-        <button class="location-button" id="chungmuroButton">충무로</button>
-        <button class="location-button" id="donggukButton">동입</button>
+        <button class="location-button" id="chungmuroButton" onclick="toggleActive('chungmuroButton')">충무로</button>
+        <button class="location-button" id="donggukButton" onclick="toggleActive('donggukButton')">동대입구</button>
       </div>
       <div class="restaurant-list">
         {% if restaurants %}
           {% for res in restaurants %}
           <div class="restaurant-item" onclick="window.location.href='/restaurant/res/{{res.id}}'">
-            
             <div class="restaurant-image">
               <img src="/images/{{res.id}}.jpg" alt="{{res.name}} 사진" class="restaurant-icon" onerror="this.src='/images/img_none.png';">
             </div>
-            
             <div class="restaurant-content">
               <h3>{{res.name}}</h3>
               <p>{{res.description}}</p>
@@ -69,22 +65,42 @@
     </div>
   </div>
   <script>
+      document.addEventListener("DOMContentLoaded", () => {
+      // URL의 경로를 가져옴
+      const currentPath = window.location.pathname;
+
+      // 버튼 요소 가져오기
+      const chungmuroButton = document.getElementById('chungmuroButton');
+      const donggukButton = document.getElementById('donggukButton');
+
+      // 현재 경로에 따라 'active' 클래스 추가
+      if (currentPath.includes('/restaurant/chungmuro')) {
+          if (chungmuroButton) {
+             donggukButton.classList.add('active');
+          }
+      } else if (currentPath.includes('/restaurant/dongguk')) {
+          if (donggukButton) {
+              chungmuroButton.classList.add('active');
+          }
+      }
+  });
+      // 드롭다운 메뉴 버튼 클릭 시 페이지 이동
+      chungmuroButton.addEventListener("click", (event) => {
+          event.preventDefault(); // 페이지 이동 전 이벤트 방지
+          window.location.href = "/restaurant/chungmuro"; // 페이지 이동
+      });
+
+      donggukButton.addEventListener("click", (event) => {
+          event.preventDefault(); // 페이지 이동 전 이벤트 방지
+          window.location.href = "/restaurant/dongguk"; // 페이지 이동
+      });
+
       const searchInput = document.querySelector(".search-input");
 
       // 검색 이벤트 추가
       searchInput.addEventListener("input", () => {
           const query = searchInput.value.toLowerCase();
           filterRestaurants(query);
-          
-          // 백엔드에 검색 파라미터 전송
-          //if (query) {
-          //    fetch(`/restaurant/search?name=${encodeURIComponent(query)}`)
-          //       .then(response => response.json())
-            //      .then(data => {
-              //        console.log('검색 결과:', data);
-                //  })
-                  //.catch(error => console.error('검색 요청 중 오류 발생:', error));
-        //  }
       });
 
       // 식당 목록 필터링 함수
@@ -113,49 +129,6 @@
               dropdownMenu.style.display = "none";
           }
       });
-
-      const locationToggle = document.getElementById("location-toggle");
-      const dropdownToggle = document.getElementById("dropdownToggle");
-      const locationDropdownMenu = document.getElementById("locationDropdownMenu");
-      const chungmuroButton = document.getElementById("chungmuroButton");
-      const donggukButton = document.getElementById("donggukButton");
-
-      // 드롭다운 메뉴 버튼 클릭 시 페이지 이동
-      chungmuroButton.addEventListener("click", (event) => {
-          event.preventDefault(); // 페이지 이동 전 이벤트 방지
-          window.location.href = "/restaurant/chungmuro"; // 페이지 이동
-      });
-
-      donggukButton.addEventListener("click", (event) => {
-          event.preventDefault(); // 페이지 이동 전 이벤트 방지
-          window.location.href = "/restaurant/dongguk"; // 페이지 이동
-      });
-
-      // 드롭다운 메뉴 토글
-      dropdownToggle.addEventListener("click", () => {
-          locationDropdownMenu.style.display = locationDropdownMenu.style.display === "block" ? "none" : "block";
-      });
-
-      // 페이지 외부 클릭 시 드롭다운 메뉴 닫기
-      document.addEventListener("click", (event) => {
-          if (!dropdownToggle.contains(event.target) && !locationDropdownMenu.contains(event.target)) {
-              locationDropdownMenu.style.display = "none";
-          }
-      });
-
-      document.addEventListener("DOMContentLoaded", () => {
-              const locationToggle = document.getElementById("location-toggle");
-
-              // 현재 URL 경로에서 위치를 확인
-              const currentPath = window.location.pathname;
-
-              // URL 경로에 따라 location-toggle의 텍스트 변경
-              if (currentPath.includes("/restaurant/dongguk")) {
-                  locationToggle.textContent = "동입";
-              } else if (currentPath.includes("/restaurant/chungmuro")) {
-                  locationToggle.textContent = "충무로";
-              }
-          });
 
       // 식당 목록 정렬 함수
       function sortRestaurants(criteria) {
@@ -195,7 +168,7 @@
       // 드롭다운 선택 시 이벤트 리스너 추가 (기존 HTML onchange 속성 대체 가능)
       document.getElementById('sortOptions').addEventListener('change', (event) => {
           sortRestaurants(event.target.value);
-      });    
+      });
   </script>
 </body>
 </html>
