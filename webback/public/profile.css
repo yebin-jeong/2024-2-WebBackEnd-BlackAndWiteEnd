@@ -6,6 +6,7 @@ body, html {
   justify-content: center;
   align-items: center;
   height: 100vh;
+  width: 100%;
   font-family: 'Roboto', sans-serif;
   background-color: #F5F5F5;
 }
@@ -31,18 +32,16 @@ body, html {
   flex-direction: column;
 } */
 
-/* 페이지 전체 컨테이너 */
-.profile-wrap {
+.profile-wrap  {
+  width: 100%;
+  max-width: 420px; 
+  padding: 20px; 
+  box-sizing: border-box;
+  height: 100vh; 
+  background-color: white;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  background-color: #fff;
-  padding: 20px;
-  width: 100%; /* 100%로 설정하여 화면 크기에 따라 자동으로 늘어나게 */
-  max-width: 420px; /* 최대 너비 420px로 설정 */
-  margin: auto;
-  box-sizing: border-box;
-  height: 100vh;
-  overflow-y: auto;
 }
 
 /* 헤더 영역 */
@@ -60,7 +59,6 @@ body, html {
   padding: 10px; 
   background-color:#ffe49f; 
   border-radius: 10px; 
-  max-width: 500px; 
   margin-top: 10px;
   margin-bottom: 10px;
 }
@@ -106,17 +104,18 @@ a {
   background-color: transparent;
   padding: 10px;
   overflow-y: auto;
-  max-height: calc(100vh - 650px);
+  max-height: 290px;
   margin-top: 10px;
   margin-bottom: 30px;
 }
 
 .review-item {
   padding-left: 16px;
-  padding-bottom: 10px;
+  padding-bottom: 11px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  justify-content: center;
   position: relative;
   background-color: #fff8e1;
   border-radius: 8px;
@@ -167,8 +166,9 @@ a {
   background-color: transparent;
   padding: 10px;
   overflow-y: auto;
-  max-height: 300px;
+  max-height: calc(100vh - 680px);
   margin-top: 0;
+  margin-bottom: 10px;
 }
 
 .following-card {
@@ -183,6 +183,7 @@ a {
   position: relative;
   transition: box-shadow 0.3s ease;
   cursor: pointer;
+  height: 40px;
 }
 
 .following-card:hover {
@@ -196,8 +197,8 @@ a {
 }
 
 .following-image {
-  width: 80px;
-  height: 80px;
+  width: 50px;
+  height: 50px;
   object-fit: cover;
   margin-right: 12px;
   border-radius: 50%;
@@ -240,7 +241,106 @@ a {
 h2{
   text-align: left;
   font-size:medium;
-  margin-bottom: 0;
+  margin-bottom: 5px;
   margin-top: 0;
 }
 
+/* 반응형 스타일을 위한 미디어 쿼리 */
+@media (max-width: 420px) {
+  /* 모바일에서는 flex-direction을 column으로 변경하여 세로 배치 */
+  .profile-wrap {
+    max-width: 100%;
+    padding: 10px;
+    height: auto; /* 높이를 자동으로 조절 */
+  }
+
+  /* 헤더 영역 간격 및 폰트 크기 조정 */
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding-bottom: 5px;
+  }
+
+  /* 인사말 및 이미지 영역 여백 조정 */
+  .image-greeting-wrapper {
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+
+  /* 이미지 크기 조정 */
+  #cook {
+    max-width: 60px;
+    margin-right: 10px;
+  }
+
+  /* 인사말 폰트 크기 축소 */
+  .greeting {
+    font-size: 16px;
+  }
+
+  /* 로그아웃 버튼 폰트 크기 축소 */
+  .logout-btn {
+    font-size: 12px;
+  }
+
+  /* 마이페이지 영역 높이 조정 */
+  .my-page {
+    height: auto;
+    padding: 15px;
+  }
+
+  /* 리뷰 항목 간격 및 폰트 크기 조정 */
+  .reviews {
+    padding: 5px;
+    max-height: 250px;
+    min-height: 150px;
+  }
+
+  .review-item {
+    padding-left: 10px;
+    padding-bottom: 8px;
+  }
+
+  .review-item h4 {
+    font-size: 14px;
+  }
+
+  .review-rating {
+    font-size: 12px;
+  }
+
+  .review-text {
+    font-size: 12px;
+  }
+
+  .review-date {
+    font-size: 11px;
+  }
+
+  /* 팔로잉 리스트 이미지 크기 축소 및 간격 조정 */
+  .followings {
+    padding: 5px;
+    min-height: 150px;
+  }
+
+  .following-card {
+    padding: 10px;
+    height: auto;
+  }
+
+  .following-image {
+    width: 40px;
+    height: 40px;
+    margin-right: 8px;
+  }
+
+  .following-details h4 {
+    font-size: 14px;
+  }
+
+  /* 스크롤바 너비 축소 */
+  .reviews::-webkit-scrollbar, .followings::-webkit-scrollbar {
+    width: 6px;
+  }
+}
