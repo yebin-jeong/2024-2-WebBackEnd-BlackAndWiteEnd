@@ -16,11 +16,13 @@ body {
 .container, .restaurant-detail {
   width: 100%;
   max-width: 420px; 
-  margin: auto;
   padding: 20px; 
   box-sizing: border-box;
-  height: auto;
+  height: 100vh; 
   background-color: white;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
   
   
@@ -67,8 +69,6 @@ body {
     font-size: 1.1rem;
   }
 
-
- 
   .restaurant-list {
     height: 83vh;
     overflow-y: scroll; 

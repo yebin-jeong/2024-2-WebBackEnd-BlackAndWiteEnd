@@ -17,11 +17,13 @@
   .container, .restaurant-detail {
     width: 100%;
     max-width: 420px; 
-    margin: auto;
     padding: 20px; 
     box-sizing: border-box;
-    height: auto; 
+    height: 100vh; 
     background-color: white;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
   }
 
   .header {
@@ -130,6 +132,7 @@
 #review-list {
   display: flex;
   flex-direction: column;
+  flex-grow: 1; /* 나머지 공간을 채우도록 설정 */
   height: calc(100vh - 400px); /* 화면 높이에서 상단 헤더, 별점, 리뷰 등록 섹션의 높이를 뺀 값 */
   padding: 20px;
   background-color: #f9f9f9;
@@ -158,6 +161,8 @@
 
   .review-section {
     margin-top: 20px;
+    margin-bottom: 10px;
+    flex-shrink: 0; /* 크기 축소를 방지 */
   }
   
   .review-section h2, h2 {
@@ -301,7 +306,7 @@
 }
 
 @media (max-width: 420px) {
-  /* 화면 너비가 400px 이하일 때 사진 크기와 하트 아이콘 크기 더 작게 조정 */
+  /* 화면 너비가 420px 이하일 때 사진 크기와 하트 아이콘 크기 더 작게 조정 */
   .restaurant-image {
     width: 100px; /* 사진 너비 더 줄이기 */
     height: 100px; /* 사진 높이 더 줄이기 */
