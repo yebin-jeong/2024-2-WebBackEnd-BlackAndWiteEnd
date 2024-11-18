@@ -88,12 +88,12 @@ exports.post = async (req, res) => {
         const restaurantId = req.params.id;
 
         // 리뷰 등록
-        const restaurant = await Restaurant.findByPk(restaurantId);
+        //const restaurant = await Restaurant.findByPk(restaurantId);
         const review = await Review.create({
             content: content,
             rating: rating,
             restaurantId: restaurantId,
-            UserId: req.user.id  // 로그인한 사용자의 ID를 사용
+            userId: req.user.id  // 로그인한 사용자의 ID를 사용
         });
         console.log('리뷰 등록을 성공 했습니다.');
 

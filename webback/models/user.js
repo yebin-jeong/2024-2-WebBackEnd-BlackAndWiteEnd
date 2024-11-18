@@ -41,7 +41,10 @@ module.exports = class User extends Sequelize.Model {
       through: 'Follow',
       timestamps: false,
     });
-    db.User.hasMany(db.Review); // User가 여러 Review를 가질 수 있는 관계 설정
+    db.User.hasMany(db.Review,{
+      foreignKey: 'userId',
+      as: 'reviews'  // User의 리뷰들
+    }); // User가 여러 Review를 가질 수 있는 관계 설정
   }  
 };
 
