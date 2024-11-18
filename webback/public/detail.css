@@ -27,8 +27,9 @@
   .header {
     display: flex;
     align-items: flex-start;
-    margin-top: 20px; 
-  }
+    width: 100%;
+    margin-bottom: 20px;
+}
 
   .header-info {
   display: flex;
@@ -52,6 +53,14 @@
   flex-direction: column; /* 텍스트 수직 정렬 */
   align-items: flex-start; /* 텍스트 왼쪽 정렬 */
 }
+
+  .title-container h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+    word-wrap: break-word; /* 긴 제목이 다음 줄로 넘어가도록 */
+    max-width: calc(100% - 40px); /* 아이콘의 너비(버튼) 제외하고 100% 너비 */
+  }
 
   h1 {
     font-size: 19px;
@@ -82,18 +91,31 @@
     margin-top: 8px;
   }
   
+  .title-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap; /* 제목이 길어지면 자동으로 줄바꿈 */
+    width: 100%; /* title-container가 .details의 남은 공간을 꽉 채우도록 */
+}
+
+  .restaurant-name {
+    font-size: 19px;
+    color: #2c3e50;
+    white-space: nowrap; /* 제목이 한 줄로 유지되도록 설정 */
+    overflow: hidden;
+    text-overflow: ellipsis; /* 너무 긴 제목은 '...'로 표시 */
+  }
   .favorite-button {
-    position: absolute;
-    top: 0; 
-    right: 0; 
     background: none;
     border: none;
     cursor: pointer;
-  }
+    padding: 0;
+}
 
-  .favorite-button img {
-    width: 24px;
-    height: 24px;
+  #heart-icon {
+      width: 24px; /* 아이콘의 크기 조정 */
+      height: 24px;
   }
 
   .info {
@@ -263,3 +285,31 @@
   border-radius: 10px;
   border: 2px solid #f1f1f1;
 }
+
+/* 반응형 스타일 추가 */
+@media (max-width: 420px) {
+  /* 화면 너비가 600px 이하일 때 사진 크기와 하트 아이콘 크기 조정 */
+  .restaurant-image {
+    width: 120px; /* 사진 너비 줄이기 */
+    height: 120px; /* 사진 높이 줄이기 */
+  }
+
+  .favorite-button img {
+    width: 20px; /* 하트 아이콘 크기 줄이기 */
+    height: 20px; /* 하트 아이콘 크기 줄이기 */
+  }
+}
+
+@media (max-width: 420px) {
+  /* 화면 너비가 400px 이하일 때 사진 크기와 하트 아이콘 크기 더 작게 조정 */
+  .restaurant-image {
+    width: 100px; /* 사진 너비 더 줄이기 */
+    height: 100px; /* 사진 높이 더 줄이기 */
+  }
+
+  .favorite-button img {
+    width: 18px; /* 하트 아이콘 크기 더 줄이기 */
+    height: 18px; /* 하트 아이콘 크기 더 줄이기 */
+  }
+}
+
