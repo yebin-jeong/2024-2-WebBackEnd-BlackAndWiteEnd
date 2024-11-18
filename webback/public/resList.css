@@ -61,6 +61,8 @@ body {
     border-radius: 10px;
     margin-top: 10px;
     position: relative;
+    height: calc(100vh - 150px); 
+    overflow: hidden; 
   }
   
   .recommendation h2 {
@@ -70,11 +72,11 @@ body {
   }
 
   .restaurant-list {
-    height: 83vh;
     overflow-y: scroll; 
     padding: 10px;
     margin-top: 10px;
     background-color: #f9f9f9;
+    height: 100%;
 } 
 
 .restaurant-item a {
@@ -291,40 +293,51 @@ body {
   background-color: orange;
 }
 
+.sort-options {
+  
+  
+}
+
 /* 스타일링 select 요소 */
 .styled-select {
-  padding: 8px 15px; 
-  font-size: 13px; 
-  color: #333;
-  background-color: #fff; 
-  border-radius: 8px; 
-  cursor: pointer; 
-  transition: all 0.3s ease; 
+  position: sticky;
 }
 
 @media (max-width: 420px) {
   .restaurant-item {
-    flex-direction: row; /* 화면 크기가 작아지면 세로 방향으로 쌓임 */
-    align-items: flex-start; /* 항목들이 왼쪽 정렬되도록 */
+    flex-direction: row; 
+    align-items: flex-start; 
   }
 
   .restaurant-icon {
-    max-width: 100%; /* 작은 화면에서는 이미지가 100%로 확장 */
+    max-width: 100%; 
     width: 100%;
-    margin-bottom: 10px; /* 이미지 아래 여백 추가 */
+    margin-bottom: 10px; 
   }
 
   .restaurant-content {
-    padding-left: 0; /* 작은 화면에서 왼쪽 여백 제거 */
+    padding-left: 0; 
   }
 
   .sort-options {
-    justify-content: center; /* 화면이 작아지면 중앙 정렬 */
-    margin-top: 15px; /* 여백을 조금 더 추가 */
   }
 
   .styled-select {
-    width: 100%; /* 화면 너비에 맞게 select 요소 확장 */
-    max-width: 200px; /* 작은 화면에서 select 최대 크기 제한 */
+    font-size: 12px; 
+    padding: 5px 10px; 
+  }
+
+  .location-menu {
+    display: flex;
+    align-items: left; 
+    justify-content: left; 
+    position: relative;
+    top: 10px; 
+    right: 0; 
+    width: 100%; 
+    margin-bottom: 10px; 
+  }
+
+  .location-button {   
   }
 }
