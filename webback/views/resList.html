@@ -43,7 +43,7 @@
           {% for res in restaurants %}
           <div class="restaurant-item" onclick="window.location.href='/restaurant/res/{{res.id}}'">
             <div class="restaurant-image">
-              <img src="/images/{{res.id}}.jpg" alt="{{res.name}} 사진" class="restaurant-icon" onerror="this.src='/images/img_none.png';">
+              <img src="/images/restaurant/{{res.id}}.jpeg" alt="{{res.name}} 사진" class="restaurant-icon" onerror = "this.src='/images/restaurant/{{res.id}}.png';" onerror="this.src='/images/img_none.png';">
             </div>
             <div class="restaurant-content">
               <h3>{{res.name}}</h3>
