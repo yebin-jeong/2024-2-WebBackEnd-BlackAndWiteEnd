@@ -31,12 +31,14 @@ body, html {
   flex-direction: column;
 } */
 
+/* 페이지 전체 컨테이너 */
 .profile-wrap {
   display: flex;
   flex-direction: column;
   background-color: #fff;
   padding: 20px;
-  width: 420px;
+  width: 100%; /* 100%로 설정하여 화면 크기에 따라 자동으로 늘어나게 */
+  max-width: 420px; /* 최대 너비 420px로 설정 */
   margin: auto;
   box-sizing: border-box;
   height: 100vh;
