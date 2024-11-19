@@ -88,7 +88,6 @@ exports.post = async (req, res) => {
         const restaurantId = req.params.id;
 
         // 리뷰 등록
-        //const restaurant = await Restaurant.findByPk(restaurantId);
         const review = await Review.create({
             content: content,
             rating: rating,
@@ -96,16 +95,8 @@ exports.post = async (req, res) => {
             userId: req.user.id  // 로그인한 사용자의 ID를 사용
         });
         console.log('리뷰 등록을 성공 했습니다.');
-
-        // 리뷰를 등록한 후, 해당 음식점의 최신 리뷰를 다시 조회
-        const updatedRestaurant = await Restaurant.findByPk(restaurantId, {
-            include: [{
-                model: Review,  // Review 모델을 포함시킴
-                as: 'reviews'   // Review와의 관계 이름
-            }]
-        });
-        return res.redirect(`/restaurant/res/${restaurantId}`);
-
+        //res.send('리뷰가 등록되었습니다.');
+        //console.log('리뷰 등록을 성공 했습니다.ddd');
     } catch (error) {
         console.error(error);
         res.status(500).send('리뷰 등록에 실패했습니다.');

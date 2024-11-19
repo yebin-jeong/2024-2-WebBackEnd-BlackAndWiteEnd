@@ -87,7 +87,7 @@
                         <img src="/images/emptyStar.png" alt="별점5" onclick="setRating(5)" data-value="5">
                     </span>
                 </div>
-                <form action="/restaurant/res/{{ res.id }}" method="post">
+                <form id="review-form" action="/restaurant/res/{{ res.id }}" method="post">
                     <textarea id="review-content" name="content" placeholder="리뷰를 작성해 주세요..." rows="4" maxlength="30" oninput="checkReviewLength()"></textarea>
                     <input type="hidden" name="rating" id="rating-value" value="0">
                     <button type="submit" id="submit-review-button" class="submit-review-button" disabled>등록</button>
@@ -134,13 +134,7 @@
         sortReviews("latest");
     });
 
-    function setRating(rating) {
-            const stars = document.querySelectorAll('#star-rating img');
-            stars.forEach((star, index) => {
-                star.src = index < rating ? "/images/yellowStar.png" : "/images/emptyStar.png";
-            });
-            document.getElementById('rating-value').value = rating;
-        }
+
 
     // 리뷰 정렬 함수
     function sortReviews(criteria) {
@@ -250,6 +244,18 @@
 
     // 리뷰 내용 입력 시 체크
     document.getElementById('review-content').addEventListener('input', checkReviewLength);
+
+    document.getElementById('review-form').addEventListener('submit', function(event) {
+        alert("리뷰가 등록되었습니다.");
+        
+        // 폼 제출 후 페이지 리로드
+        // 폼이 성공적으로 제출되면 서버에서 처리가 끝난 후 페이지를 새로 고침
+        setTimeout(function() {
+            window.location.reload(); // 페이지 리로드
+        }, 5); // 0.005초 후 리로드
+    });
+
+
 
 </script>
 
