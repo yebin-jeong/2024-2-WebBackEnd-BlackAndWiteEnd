@@ -11,9 +11,9 @@
     <div class="container"> -->
       <div class="profile-wrap">
         <div class="header">
-          <a href="/">
+          <a href="javascript:void(0);" onclick="window.history.back();">
             <img src="/images/arrow.png" class="back-button" alt="뒤로가기">
-          </a>
+          </a>          
           {% if user %}
             <a href="/auth/logout" class="logout-btn">로그아웃</a>
           {% endif %}
