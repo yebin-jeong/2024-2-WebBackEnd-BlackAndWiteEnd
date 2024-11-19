@@ -16,7 +16,7 @@
 
         <!-- 음식점 사진 및 정보 -->
         <div class="header">
-            <img src="/images/restaurant/{{ res.id }}.jpeg" onerror = "this.src='/images/restaurant/{{res.id}}.png';"  onerror="this.onerror=null; this.src='/images/img_none.png';" alt="{{ res.name }} 사진" class="restaurant-image">
+            <img src="/images/restaurant/{{ res.id }}.jpeg"  onerror="loadAlternativeImage(this, '{{res.id}}')" alt="{{ res.name }} 사진" class="restaurant-image">
             <div class="details">
                 <div class="title-container">
                     <h1>{{ res.name }}</h1>
@@ -100,6 +100,23 @@
     </div>
 
 <script>
+    function loadAlternativeImage(imgElement, resId) {
+        // 시도할 파일 확장자 목록
+        const extensions = ['jpeg', 'jpg', 'png'];
+        
+        // 현재 src의 확장자를 가져옴
+        let currentExtension = imgElement.src.split('.').pop();
+        let currentIndex = extensions.indexOf(currentExtension);
+
+        // 다음 확장자로 변경
+        if (currentIndex < extensions.length - 1) {
+            // 다음 확장자로 시도
+            imgElement.src = `/images/restaurant/${resId}.${extensions[currentIndex + 1]}`;
+        } else {
+            // 모든 확장자를 시도했으나 실패하면 기본 이미지로 설정
+            imgElement.src = '/images/img_none.png';
+        }
+    }
     let currentSortCriteria = "latest"; // 기본값은 최신순
 
     // 페이지가 로드될 때 기본적으로 최신순으로 정렬
@@ -252,7 +269,7 @@
         // 폼이 성공적으로 제출되면 서버에서 처리가 끝난 후 페이지를 새로 고침
         setTimeout(function() {
             window.location.reload(); // 페이지 리로드
-        }, 5); // 0.005초 후 리로드
+        }, 100); // 0.005초 후 리로드
     });
 
 
