@@ -349,8 +349,8 @@ h2{
     .reviews {
       max-height: 150px;
     }
-
     .followings {
       max-height: calc(100vh - 550px);
     }
   }
+
