@@ -344,3 +344,12 @@ h2{
     width: 6px;
   }
 }
+
+  @media (max-height: 800px) {
+    .reviews {
+      max-height: 150px;
+    }
+    .followings {
+      max-height: calc(100vh - 550px);
+    }
+  }
