@@ -166,7 +166,7 @@ a {
   background-color: transparent;
   padding: 10px;
   overflow-y: auto;
-  max-height: calc(100vh - 680px);
+  max-height: calc(100vh - 670px);
   margin-top: 0;
   margin-bottom: 10px;
 }
@@ -253,14 +253,18 @@ h2{
   .profile-wrap {
     max-width: 100%;
     padding: 10px;
-    height: auto; /* 높이를 자동으로 조절 */
+    height: 100vh; 
   }
 
   /* 헤더 영역 간격 및 폰트 크기 조정 */
   .header {
-    flex-direction: column;
-    align-items: flex-start;
-    padding-bottom: 5px;
+    flex-direction: row; /* 모바일에서는 가로 배치 */
+    justify-content: space-between;
+  }
+
+  .logout-btn {
+    position: static;  /* 필요시 상대적 위치로 변경 */
+    margin-left: auto;  /* 오른쪽 정렬 */
   }
 
   /* 인사말 및 이미지 영역 여백 조정 */
@@ -288,7 +292,7 @@ h2{
 
   /* 마이페이지 영역 높이 조정 */
   .my-page {
-    height: auto;
+    height: 100vh;
     padding: 15px;
   }
 
@@ -324,6 +328,7 @@ h2{
   .followings {
     padding: 5px;
     min-height: 150px;
+    max-height: calc(100vh - 550px);
   }
 
   .following-card {
@@ -352,7 +357,12 @@ h2{
       max-height: 150px;
     }
     .followings {
-      max-height: calc(100vh - 550px);
+      max-height: calc(100vh - 480px);
     }
   }
 
+  @media (min-width: 420px) and (max-height: 800px) {
+    .followings {
+      max-height: calc(100vh - 530px);
+    }
+  }
