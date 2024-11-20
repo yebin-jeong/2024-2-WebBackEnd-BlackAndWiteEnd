@@ -4,7 +4,7 @@
   "description": "동국요리사",
   "main": "app.js",
   "scripts": {
-    "start": "node app"
+    "start": "nodemon app"
   },
   "author": "baw",
   "dependencies": {
