@@ -61,8 +61,13 @@ body {
     border-radius: 10px;
     margin-top: 10px;
     position: relative;
-    height: calc(100vh - 150px); 
-    overflow: hidden; 
+    height: 100vh; 
+    overflow:hidden;
+    height: calc(100vh - 150px); /* 필요에 따라 조정 */
+    overflow: hidden; /* 넘치는 부분 숨김 */
+    display: flex;
+    flex-direction: column; /* 자식 요소들이 수직으로 정렬되도록 함 */
+    align-items: stretch; /* 요소들이 부모 컨테이너의 너비에 맞게 확장됨 */
   }
   
   .recommendation h2 {
@@ -72,11 +77,11 @@ body {
   }
 
   .restaurant-list {
-    overflow-y: scroll; 
-    padding: 10px;
-    margin-top: 10px;
-    background-color: #f9f9f9;
-    height: 100%;
+    flex: 1; /* 부모 컨테이너 안에서 공간을 차지하도록 함 */
+    overflow-y: scroll; /* 수직 스크롤 활성화 */
+    margin-top: 10px; /* 여백 조정 */
+    background-color: #f9f9f9; /* 배경색 */
+    position: relative; /* 필요 시 조정 */
 } 
 
 .restaurant-item a {
@@ -99,7 +104,8 @@ body {
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  max-width: 700px;
+  width: 100%; /* 100%로 설정하여 부모 컨테이너에 맞게 조정 */
+  max-width: 100%; /* 필요 시 조정 */
   cursor: pointer;
   flex-wrap: wrap;
 }
@@ -118,6 +124,7 @@ body {
   flex-direction: column;
   padding-left: 5px; /* 여백 추가 */
   word-wrap: break-word; /* 텍스트 줄 바꿈 설정 */
+  overflow: visible; /* overflow를 visible로 변경하여 텍스트가 잘리지 않도록 함 */
 }
 
 .restaurant-content h3 {
@@ -271,11 +278,17 @@ body {
 
 .location-menu {
   display: flex;
-  justify-content: center; 
-  position: relative;
-  top: 10px; 
-  right: 99px;
-  z-index: 0;
+  justify-content: flex-start; /* 버튼들을 왼쪽으로 정렬 */
+  align-items: center; /* 수직 정렬 */
+  flex-wrap: nowrap; /* 줄바꿈을 방지 */
+  gap: 5px; /* 버튼 사이의 간격 */
+  margin: 0; /* 여백 제거 */
+  padding: 0; /* 패딩 제거 */
+}
+
+.location-menu, .restaurant-list {
+  margin: 0; /* 불필요한 마진 제거 */
+  padding: 0; /* 불필요한 패딩 제거 */
 }
 
 .location-button {
@@ -341,3 +354,4 @@ body {
   .location-button {   
   }
 }
+
