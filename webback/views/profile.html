@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="icon" type="image/png" href="/images/cook.png">
     <title>마이페이지</title>
     <link rel="stylesheet" href="/profile.css">
 </head>
@@ -63,7 +64,7 @@
               {% for following in user.Followings %}
               <a href="/restaurant/res/{{ following.id }}" class="following-link">
                 <div class="following-card">
-                  <img src="/images/{{ following.id }}.jpg" alt="{{ following.name }} 이미지" class="following-image" onerror="this.src='/images/img_none.png'">
+                  <img src="/images/restaurant/{{ following.id }}.jpeg" alt="{{ following.name }} 이미지" class="following-image" onerror="loadAlternativeImage(this, '{{following.id}}')">
                   <div class="following-details">
                     <h4>{{ following.name }}</h4>
                     <span class="heart">❤️</span>
@@ -80,6 +81,23 @@
   </div> -->
 
   <script>
+    function loadAlternativeImage(imgElement, resId) {
+        // 시도할 파일 확장자 목록
+        const extensions = ['jpeg', 'jpg', 'png'];
+        
+        // 현재 src의 확장자를 가져옴
+        let currentExtension = imgElement.src.split('.').pop();
+        let currentIndex = extensions.indexOf(currentExtension);
+
+        // 다음 확장자로 변경
+        if (currentIndex < extensions.length - 1) {
+            // 다음 확장자로 시도
+            imgElement.src = `/images/restaurant/${resId}.${extensions[currentIndex + 1]}`;
+        } else {
+            // 모든 확장자를 시도했으나 실패하면 기본 이미지로 설정
+            imgElement.src = '/images/img_none.png';
+        }
+    }
       function formatDate(dateString) {
           const date = new Date(dateString);
           const year = date.getFullYear();
