@@ -29,9 +29,9 @@
     <div class="recommendation">
       <div class="sort-options">
         <select id="sortOptions" class="styled-select" onchange="sortRestaurants(this.value)">
-          <option value="reviewCount">리뷰순</option>
-          <option value="avgRating">별점순</option>
-          <option value="followCount">찜 많은순</option>
+          <option value="reviewCount">리뷰많은순</option>
+          <option value="avgRating">별점높은순</option>
+          <option value="followCount">찜많은순</option>
         </select>
       </div>
       <div class="location-menu">
@@ -149,6 +149,9 @@
           }
       });
 
+      document.addEventListener("DOMContentLoaded", () => {
+        // 페이지가 로드되면 "reviewCount" 기준으로 정렬 실행
+          sortRestaurants("reviewCount");});
       // 식당 목록 정렬 함수
       function sortRestaurants(criteria) {
           const restaurantList = document.querySelector('.restaurant-list');
