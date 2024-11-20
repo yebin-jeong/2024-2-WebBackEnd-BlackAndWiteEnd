@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="/images/cook.png">
   <title>{{title}}</title>
   <link rel="stylesheet" href="/resList.css"> 
 </head>
@@ -29,9 +30,9 @@
     <div class="recommendation">
       <div class="sort-options">
         <select id="sortOptions" class="styled-select" onchange="sortRestaurants(this.value)">
-          <option value="reviewCount">리뷰순</option>
-          <option value="avgRating">별점순</option>
-          <option value="followCount">찜 많은순</option>
+          <option value="reviewCount">리뷰많은순</option>
+          <option value="avgRating">별점높은순</option>
+          <option value="followCount">찜많은순</option>
         </select>
       </div>
       <div class="location-menu">
@@ -43,7 +44,7 @@
           {% for res in restaurants %}
           <div class="restaurant-item" onclick="window.location.href='/restaurant/res/{{res.id}}'">
             <div class="restaurant-image">
-              <img src="/images/restaurant/{{res.id}}.jpeg" alt="{{res.name}} 사진" class="restaurant-icon" onerror = "this.src='/images/restaurant/{{res.id}}.png';" onerror="this.src='/images/img_none.png';">
+              <img src="/images/restaurant/{{res.id}}.jpeg" alt="{{res.name}} 사진" class="restaurant-icon" onerror="loadAlternativeImage(this, '{{res.id}}')">
             </div>
             <div class="restaurant-content">
               <h3>{{res.name}}</h3>
@@ -65,6 +66,25 @@
     </div>
   </div>
   <script>
+
+    function loadAlternativeImage(imgElement, resId) {
+        // 시도할 파일 확장자 목록
+        const extensions = ['jpeg', 'jpg', 'png'];
+        
+        // 현재 src의 확장자를 가져옴
+        let currentExtension = imgElement.src.split('.').pop();
+        let currentIndex = extensions.indexOf(currentExtension);
+
+        // 다음 확장자로 변경
+        if (currentIndex < extensions.length - 1) {
+            // 다음 확장자로 시도
+            imgElement.src = `/images/restaurant/${resId}.${extensions[currentIndex + 1]}`;
+        } else {
+            // 모든 확장자를 시도했으나 실패하면 기본 이미지로 설정
+            imgElement.src = '/images/img_none.png';
+        }
+    }
+    
       document.addEventListener("DOMContentLoaded", () => {
       // URL의 경로를 가져옴
       const currentPath = window.location.pathname;
@@ -130,6 +150,9 @@
           }
       });
 
+      document.addEventListener("DOMContentLoaded", () => {
+        // 페이지가 로드되면 "reviewCount" 기준으로 정렬 실행
+          sortRestaurants("reviewCount");});
       // 식당 목록 정렬 함수
       function sortRestaurants(criteria) {
           const restaurantList = document.querySelector('.restaurant-list');
